@@ -4,7 +4,7 @@ namespace Logisticsm.DAL
 {
 	public abstract class ProviderBase
 	{
-		protected OrderDbContext db = null;
+		protected OrderDbContext db = null!;
 
 		public ProviderBase()
 		{

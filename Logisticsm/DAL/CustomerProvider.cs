@@ -22,10 +22,15 @@ namespace Logisticsm.DAL
 			return db.SaveChanges();
 		}
 
-		public int Update(Customer entity)
+        public int Save()
+        {
+            return db.SaveChanges();
+        }
+
+        public int Update(Customer entity)
 		{
 			db.Entry(entity).State = EntityState.Modified;
 			return db.SaveChanges();
 		}
-	}
+    }
 }

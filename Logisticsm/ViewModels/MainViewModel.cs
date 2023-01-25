@@ -1,23 +1,27 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Logisticsm.DAL;
 using Logisticsm.DAL.Models;
 using Logisticsm.Views;
 using Microsoft.Extensions.DependencyInjection;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Logisticsm.ViewModels
 {
-	public class MainViewModel : ObservableObject
+    public class MainViewModel : ObservableObject
 	{
+
 		#region Properties
 
 		public Member? CurrentUser { get; set; } = null!;
 
-		//public ContentControl CurrentPage { get; set; } = null!;
 
-		private ContentControl _currentPage;
-
-		public ContentControl CurrentPage
+		private ContentControl _currentPage = null!;
+        /// <summary>
+        /// 目前頁面
+        /// </summary>
+        public ContentControl CurrentPage
 		{
 			get => _currentPage;
 			set
@@ -26,18 +30,58 @@ namespace Logisticsm.ViewModels
 			}
 		}
 
+        private Visibility _mamkerVisible = Visibility.Collapsed;
+        /// <summary>
+        /// 主頁面遮罩
+        /// </summary>
+        public Visibility MamkerVisible
+        {
+            get => _mamkerVisible;
+            set
+            {
+                SetProperty(ref _mamkerVisible, value);
+            }
+        }
 
-		#endregion
+        private DateTime _systemTime = DateTime.Now;
+        /// <summary>
+        /// 系統時間
+        /// </summary>
+        public DateTime SystemTime
+        {
+            get => _systemTime;
+            set
+            {
+                SetProperty(ref _systemTime, value);
+            }
+        }
 
-		public MainViewModel()
-		{
-			CurrentUser = AppData.Instance.CurrentUser;
-			CurrentPage = App.ServiceProvider.GetRequiredService<AirTransportView>();
-		}
+        #endregion
 
-		#region Commands
 
-		public RelayCommand<object> MenuCommand
+        #region Ctors
+
+        public MainViewModel()
+        {
+            CurrentUser = AppData.Instance.CurrentUser;
+            CurrentPage = App.ServiceProvider.GetRequiredService<AirTransportView>();
+
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    Thread.Sleep(1000);
+                    SystemTime = DateTime.Now;
+                }
+            });
+        }
+
+        #endregion
+
+
+        #region Commands
+
+        public RelayCommand<object> MenuCommand
 		{
 			get
 			{
@@ -47,23 +91,82 @@ namespace Logisticsm.ViewModels
 					{
 						if (string.IsNullOrEmpty(button.Name)) return;
 
-						switch (button.Name)
-						{
-							case "AirTransportView":
-								CurrentPage = App.ServiceProvider.GetRequiredService<AirTransportView>();
-								break;
-							case "CustomerView":
-								CurrentPage = App.ServiceProvider.GetRequiredService<CustomerView>();
-								break;
-							default:
-								break;
-						}
-					}
+						if (button.Name == CurrentPage.GetType().Name) return;
+
+                        Save(CurrentPage);
+
+                        SetCurrentPage(button.Name);
+                    }
 				});
 				return command;
 			}
 		}
 
-		#endregion
-	}
+        /// <summary>
+        /// 關閉頁面時
+        /// </summary>
+        public RelayCommand ClosingCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    Save(CurrentPage);
+                });
+            }
+        }
+
+        #endregion
+
+
+        #region Private Methods
+
+        /// <summary>
+        /// 設定現在頁面
+        /// </summary>
+        /// <param name="pageType">頁面類型</param>
+        private void SetCurrentPage(string pageType)
+		{
+            switch (pageType)
+            {
+                case "AirTransportView":
+                    CurrentPage = App.ServiceProvider.GetRequiredService<AirTransportView>();
+                    
+                    break;
+                case "CustomerView":
+                    CurrentPage = App.ServiceProvider.GetRequiredService<CustomerView>();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 儲存頁面資料
+        /// </summary>
+        /// <param name="currentPage">現在頁面物件</param>
+		private void Save(ContentControl currentPage)
+		{
+            string pageType = currentPage.GetType().Name;
+
+            switch (pageType)
+            {
+                case "AirTransportView":
+                    if (currentPage is not AirTransportView) return;
+                    if (currentPage.DataContext is not AirTransportViewModel airTransportViewModel) return;
+                    airTransportViewModel.Save();
+                    break;
+                case "CustomerView":
+                    if (currentPage is not CustomerView) return;
+                    if (currentPage.DataContext is not CustomerViewModel customerViewModel) return;
+                    customerViewModel.Save();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        #endregion
+
+    }
 }

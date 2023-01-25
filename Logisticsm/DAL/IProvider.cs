@@ -6,5 +6,6 @@
 		int Update(T entity);
 		int Delete(T entity);
 		List<T> GetAll();
+		int Save();
 	}
 }

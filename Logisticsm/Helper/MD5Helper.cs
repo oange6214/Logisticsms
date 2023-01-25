@@ -7,9 +7,9 @@ namespace Logisticsm.Helper
 	{
 		public static string GetMD5(string input)
 		{
-			MD5 md5 = new MD5CryptoServiceProvider();
-			byte[] output = md5.ComputeHash(Encoding.Default.GetBytes(input));
-			return BitConverter.ToString(output).Replace("-", "");
-		}
+            using var md5 = MD5.Create();
+            byte[] output = md5.ComputeHash(Encoding.Default.GetBytes(input));
+            return BitConverter.ToString(output).Replace("-", "");
+        }
 	}
 }

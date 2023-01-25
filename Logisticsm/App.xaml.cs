@@ -9,7 +9,7 @@ namespace Logisticsm;
 
 public partial class App : Application
 {
-	public static IServiceProvider ServiceProvider { get; private set; }
+	public static IServiceProvider ServiceProvider { get; private set; } = null!;
 
 	public App()
 	{
@@ -33,15 +33,15 @@ public partial class App : Application
 	{
 		services.AddSingleton<MainWindow>();
 		services.AddSingleton<LoginWindow>();
-		services.AddSingleton<AirTransportView>();
-		services.AddSingleton<CustomerView>();
+		services.AddTransient<AirTransportView>();
+		services.AddTransient<CustomerView>();
 	}
 
 	private void ViewModelServices(HostBuilderContext hostBuilderContext, IServiceCollection services)
 	{
 		services.AddSingleton<MainViewModel>();
 		services.AddSingleton<LoginViewModel>();
-		services.AddSingleton<AirTransportViewModel>();
-		services.AddSingleton<CustomerViewModel>();
+		services.AddTransient<AirTransportViewModel>();
+		services.AddTransient<CustomerViewModel>();
 	}
 }

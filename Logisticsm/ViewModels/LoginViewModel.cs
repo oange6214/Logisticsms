@@ -41,7 +41,7 @@ namespace Logisticsm.ViewModels
 				var command = new RelayCommand<LoginWindow>((window) =>
 				{
 					if (string.IsNullOrEmpty(Member.Name)) return;
-					if (string.IsNullOrEmpty(window._passwordBox.Password)) return;
+					if (string.IsNullOrEmpty(window?._passwordBox.Password)) return;
 
 					Member? currentUser = _memberProvider.GetAll().FirstOrDefault(item => item.Name == Member.Name);
 					if (currentUser == null)
@@ -61,9 +61,9 @@ namespace Logisticsm.ViewModels
 
 					MainWindow mainWindow = new();
 					mainWindow.Show();
+
 					window.Close();
 				});
-
 				return command;
 			}
 		}
