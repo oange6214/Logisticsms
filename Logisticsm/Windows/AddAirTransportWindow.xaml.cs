@@ -7,6 +7,9 @@ namespace Logisticsm.Windows
         public AddAirTransportWindow()
         {
             InitializeComponent();
+
+            firstGrid.Visibility= Visibility.Visible;
+            secondGrid.Visibility= Visibility.Collapsed;
         }
     }
 }

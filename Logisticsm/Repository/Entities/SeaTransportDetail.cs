@@ -4,12 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Logisticsm.DAL.Models;
+namespace Logisticsm.Repository.Entities;
 
-[Keyless]
 [Table("SeaTransportDetail")]
 public partial class SeaTransportDetail
 {
+    [Key]
     [Column("id")]
     public int Id { get; set; }
 

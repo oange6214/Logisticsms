@@ -1,14 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Logisticsm.DAL;
-using Logisticsm.DAL.Models;
+using Logisticsm.Models;
+using Logisticsm.Repository.Entities;
+using Logisticsm.Repository.Providers;
 using Logisticsm.Windows;
-using System;
-using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Logisticsm.ViewModels
@@ -18,6 +15,8 @@ namespace Logisticsm.ViewModels
         #region Fields
 
         private readonly CustomerProvider _customerProvider = new();
+        private readonly AirTransportProvider _airTransportProvider = new();
+        private readonly AirTransportDetailProvider _airTransportDetailProvider = new();
 
         #endregion
 
@@ -49,16 +48,30 @@ namespace Logisticsm.ViewModels
             }
         }
 
-        private AirTransport _airTransport = new();
+        private AirTransportModel _airTransport = new() { SendDate = DateTime.Now };
         /// <summary>
-        /// 客戶
+        /// 空運單號
         /// </summary>
-        public AirTransport AirTransport
+        public AirTransportModel AirTransport
         {
             get => _airTransport;
             set
             {
                 SetProperty(ref _airTransport, value);
+            }
+        }
+
+
+        private ObservableCollection<AirTransportDetail> _airTransportDetails = new();
+        /// <summary>
+        /// 詳細空運單號
+        /// </summary>
+        public ObservableCollection<AirTransportDetail> AirTransportDetails
+        {
+            get => _airTransportDetails;
+            set
+            {
+                SetProperty(ref _airTransportDetails, value);
             }
         }
 
@@ -86,12 +99,13 @@ namespace Logisticsm.ViewModels
         /// <summary>
         /// 按下關閉視窗
         /// </summary>
-        public RelayCommand<AddAirTransportWindow> ClosedCommand
+        public RelayCommand<AddAirTransportWindow> CloseWindowCommand
         {
             get
             {
                 return new RelayCommand<AddAirTransportWindow>((window) =>
                 {
+
                     window?.Close();
                 });
             }
@@ -100,7 +114,7 @@ namespace Logisticsm.ViewModels
         /// <summary>
         /// 按下一步
         /// </summary>
-        public RelayCommand<AddAirTransportWindow> NextStepCommand 
+        public RelayCommand<AddAirTransportWindow> NextStepCommand
         {
             get
             {
@@ -112,9 +126,91 @@ namespace Logisticsm.ViewModels
 
                     window.firstGrid.Visibility = Visibility.Collapsed;
                     window.secondGrid.Visibility = Visibility.Visible;
+
+                    _airTransportProvider.Insert(AirTransport);
                 });
             }
         }
+
+        /// <summary>
+        /// 增加空運詳細記錄
+        /// </summary>
+        public RelayCommand<AirTransportDetail> AddDetailCommand
+        {
+            get
+            {
+                return new RelayCommand<AirTransportDetail>((e) =>
+                {
+                    AirTransportDetail airTransportDetail = new()
+                    {
+                        MemberId = AppData.Instance.CurrentUser.Id,
+                        AirTransportId = AirTransport.Id
+                    };
+                    var count = _airTransportDetailProvider.Insert(airTransportDetail);
+                    if (count > 0)
+                    {
+                        AirTransportDetails.Add(airTransportDetail);
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 儲存空運單號
+        /// </summary>
+        public RelayCommand SaveCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    _airTransportProvider.Save();
+                    _airTransportDetailProvider.Save();
+                });
+            }
+        }
+
+        /// <summary>
+        /// 按下關閉鈕
+        /// </summary>
+        public RelayCommand<Window> CloseCommand
+        {
+            get
+            {
+                return new RelayCommand<Window>((window) =>
+                {
+                    window?.Close();
+                });
+            }
+        }
+
+        /// <summary>
+        /// 刪除一個項目
+        /// </summary>
+        public RelayCommand<AirTransportDetail> DeleteCustomerCommand
+        {
+            get
+            {
+                return new RelayCommand<AirTransportDetail>((airTransportDetail) =>
+                {
+                    if (airTransportDetail == null) return;
+
+                    App.ServiceProvider.GetRequiredService<MainViewModel>().MamkerVisible = Visibility.Visible;
+
+                    if (MessageBox.Show($"Delete this [ {airTransportDetail.Id} ]?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        var count = _airTransportDetailProvider.Delete(airTransportDetail);
+                        if (count > 0)
+                        {
+                            AirTransportDetails.Remove(airTransportDetail);
+                        }
+                    }
+
+                    App.ServiceProvider.GetRequiredService<MainViewModel>().MamkerVisible = Visibility.Collapsed;
+                });
+            }
+        }
+
 
 
         #endregion

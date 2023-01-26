@@ -9,8 +9,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="addAirTransportWindow"
     Title="新增空運單號"
-    Width="800"
-    Height="550"
+    Width="1000"
+    Height="600"
     AllowsTransparency="True"
     Background="Transparent"
     DataContext="{Binding Source={StaticResource Locator}, Path=AddAirTransport}"
@@ -25,7 +25,10 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Border Background="White" CornerRadius="15">
+    <Border
+        Margin="10"
+        Background="White"
+        CornerRadius="15">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
@@ -33,7 +36,7 @@
             </Grid.RowDefinitions>
 
             <Button
-                Command="{Binding ClosedCommand}"
+                Command="{Binding CloseWindowCommand}"
                 CommandParameter="{Binding ElementName=addAirTransportWindow}"
                 Style="{StaticResource CloseStyle}" />
 
@@ -50,6 +53,7 @@
                 Grid.Row="1"
                 Width="300"
                 Height="300"
+                Margin="10,0,10,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Visibility="Collapsed">
@@ -114,138 +118,285 @@
             </Grid>
 
             <!--  第二步  -->
-            <Grid x:Name="secondGrid" Grid.Row="1">
+            <Grid
+                x:Name="secondGrid"
+                Grid.Row="1"
+                Margin="10,0,10,0"
+                Visibility="Visible">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-                <!--  輸入項  -->
+
                 <Grid Grid.Row="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        MinWidth="100"
-                        VerticalAlignment="Center"
-                        Text="單號"
-                        TextAlignment="Right" />
-                    <TextBlock
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        MinWidth="100"
-                        VerticalAlignment="Center"
-                        Text="件數"
-                        TextAlignment="Right" />
-                    <TextBlock
-                        Grid.Row="2"
-                        Grid.Column="0"
-                        MinWidth="100"
-                        VerticalAlignment="Center"
-                        Text="重量"
-                        TextAlignment="Right" />
-                    <TextBlock
-                        Grid.Row="3"
-                        Grid.Column="0"
-                        MinWidth="100"
-                        VerticalAlignment="Center"
-                        Text="體積"
-                        TextAlignment="Right" />
-                    <TextBlock
-                        Grid.Row="4"
-                        Grid.Column="0"
-                        MinWidth="100"
-                        VerticalAlignment="Center"
-                        Text="起始地"
-                        TextAlignment="Right" />
-                    <TextBlock
-                        Grid.Row="5"
-                        Grid.Column="0"
-                        MinWidth="100"
-                        VerticalAlignment="Center"
-                        Text="目的地"
-                        TextAlignment="Right" />
-                    <TextBlock
-                        Grid.Row="6"
-                        Grid.Column="0"
-                        MinWidth="100"
-                        VerticalAlignment="Center"
-                        Text="貨物密度"
-                        TextAlignment="Right" />
+                    <!--  輸入項  -->
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
 
-                    <TextBox
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Height="30"
-                        MinWidth="200"
-                        Margin="3"
-                        VerticalAlignment="Center" />
-                    <TextBox
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Height="30"
-                        MinWidth="200"
-                        Margin="3"
-                        VerticalAlignment="Center"
-                        IsReadOnly="True" />
-                    <TextBox
-                        Grid.Row="2"
-                        Grid.Column="1"
-                        Height="30"
-                        MinWidth="200"
-                        Margin="3"
-                        VerticalAlignment="Center"
-                        IsReadOnly="True" />
-                    <TextBox
-                        Grid.Row="3"
-                        Grid.Column="1"
-                        Height="30"
-                        MinWidth="200"
-                        Margin="3"
-                        VerticalAlignment="Center"
-                        IsReadOnly="True" />
-                    <TextBox
-                        Grid.Row="4"
-                        Grid.Column="1"
-                        Height="30"
-                        MinWidth="200"
-                        Margin="3"
-                        VerticalAlignment="Center" />
-                    <TextBox
-                        Grid.Row="5"
-                        Grid.Column="1"
-                        Height="30"
-                        MinWidth="200"
-                        Margin="3"
-                        VerticalAlignment="Center" />
-                    <TextBox
-                        Grid.Row="6"
-                        Grid.Column="1"
-                        Height="30"
-                        MinWidth="200"
-                        Margin="3"
-                        VerticalAlignment="Center" />
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            MinWidth="100"
+                            VerticalAlignment="Center"
+                            Text="單號"
+                            TextAlignment="Right" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            MinWidth="100"
+                            VerticalAlignment="Center"
+                            Text="件數"
+                            TextAlignment="Right" />
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            MinWidth="100"
+                            VerticalAlignment="Center"
+                            Text="重量"
+                            TextAlignment="Right" />
+                        <TextBlock
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            MinWidth="100"
+                            VerticalAlignment="Center"
+                            Text="體積"
+                            TextAlignment="Right" />
+                        <TextBlock
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            MinWidth="100"
+                            VerticalAlignment="Center"
+                            Text="起始地"
+                            TextAlignment="Right" />
+                        <TextBlock
+                            Grid.Row="5"
+                            Grid.Column="0"
+                            MinWidth="100"
+                            VerticalAlignment="Center"
+                            Text="目的地"
+                            TextAlignment="Right" />
+                        <TextBlock
+                            Grid.Row="6"
+                            Grid.Column="0"
+                            MinWidth="100"
+                            VerticalAlignment="Center"
+                            Text="貨物密度"
+                            TextAlignment="Right" />
+
+                        <TextBox
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Height="30"
+                            MinWidth="200"
+                            Margin="3"
+                            VerticalAlignment="Center"
+                            Text="{Binding AirTransport.OrderNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Height="30"
+                            MinWidth="200"
+                            Margin="3"
+                            VerticalAlignment="Center"
+                            IsReadOnly="True"
+                            Text="{Binding AirTransport.SumCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Height="30"
+                            MinWidth="200"
+                            Margin="3"
+                            VerticalAlignment="Center"
+                            IsReadOnly="True" />
+                        <TextBox
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Height="30"
+                            MinWidth="200"
+                            Margin="3"
+                            VerticalAlignment="Center"
+                            IsReadOnly="True" />
+                        <TextBox
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            Height="30"
+                            MinWidth="200"
+                            Margin="3"
+                            VerticalAlignment="Center"
+                            Text="{Binding AirTransport.SourcePlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox
+                            Grid.Row="5"
+                            Grid.Column="1"
+                            Height="30"
+                            MinWidth="200"
+                            Margin="3"
+                            VerticalAlignment="Center"
+                            Text="{Binding AirTransport.TargetPlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox
+                            Grid.Row="6"
+                            Grid.Column="1"
+                            Height="30"
+                            MinWidth="200"
+                            Margin="3"
+                            VerticalAlignment="Center" />
+                    </Grid>
+
+                    <!--  備註  -->
+                    <Grid Grid.Column="1">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="{Binding AirTransport.Tag}" />
+                    </Grid>
                 </Grid>
 
                 <!--  詳細訊息  -->
-                <Grid Grid.Row="1" />
+                <Grid Grid.Row="1">
+                    <DataGrid
+                        CellStyle="{StaticResource GeneralDataGridCellStyle}"
+                        ItemsSource="{Binding AirTransportDetails}"
+                        RowStyle="{StaticResource GeneralDataGridRowStyle}"
+                        Style="{StaticResource GeneralDataGridStyle}">
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn
+                                Width="60"
+                                Binding="{Binding Id}"
+                                Header="編號" />
+
+                            <DataGridTemplateColumn Width="150" Header="收貨時間">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <DatePicker VerticalAlignment="Center" SelectedDate="{Binding AirTransport.ReceiveDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Width="150" Header="收貨件數">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Width="80" Header="重量">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Width="80" Header="體積">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Width="80" Header="長">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Length, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Width="80" Header="寬">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Width="80" Header="高">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Width="80" Header="操作">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button
+                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:AddAirTransportWindow}, Path=DataContext.DeleteCustomerCommand}"
+                                            CommandParameter="{Binding}"
+                                            Content="刪除"
+                                            Style="{StaticResource DataGridDeleteButtonStyle}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
 
                 <!--  操作按鈕  -->
-                <Grid Grid.Row="2" />
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Left">
+                        <Button
+                            Grid.ColumnSpan="2"
+                            Width="100"
+                            Height="30"
+                            Command="{Binding AddDetailCommand}"
+                            Content="增加"
+                            Style="{StaticResource ButtonStyle}" />
+                    </StackPanel>
+
+
+                    <StackPanel
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <Button
+                            Grid.ColumnSpan="2"
+                            Width="100"
+                            Height="30"
+                            Command="{Binding SaveCommand}"
+                            Content="確定"
+                            Style="{StaticResource ButtonStyle}" />
+                        <Button
+                            Grid.ColumnSpan="2"
+                            Width="100"
+                            Height="30"
+                            Command="{Binding CloseCommand}"
+                            Content="關閉"
+                            Style="{StaticResource ButtonStyle}" />
+                    </StackPanel>
+                </Grid>
             </Grid>
         </Grid>
     </Border>
+
 </Window>

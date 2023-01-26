@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Logisticsm.DAL.Models;
+namespace Logisticsm.Repository.Entities;
 
-[Table("AirTransport")]
-public partial class AirTransport
+[Table("SeaTransport")]
+public partial class SeaTransport
 {
     [Key]
     [Column("id")]
@@ -22,13 +22,26 @@ public partial class AirTransport
     [Column("send_date", TypeName = "datetime")]
     public DateTime SendDate { get; set; }
 
-    [Column("order_number")]
+    [Column("box_model")]
     [StringLength(64)]
-    public string OrderNumber { get; set; } = null!;
+    public string BoxModel { get; set; } = null!;
+
+    [Column("box_number")]
+    [StringLength(64)]
+    public string BoxNumber { get; set; } = null!;
 
     [Column("batch")]
     [StringLength(64)]
     public string Batch { get; set; } = null!;
+
+    [Column("count")]
+    public int Count { get; set; }
+
+    [Column("volume")]
+    public double Volume { get; set; }
+
+    [Column("weight")]
+    public double Weight { get; set; }
 
     [Column("source_place")]
     [StringLength(50)]

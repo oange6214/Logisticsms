@@ -44,6 +44,6 @@ public partial class App : Application
 		services.AddSingleton<LoginViewModel>();
 		services.AddTransient<AirTransportViewModel>();
 		services.AddTransient<CustomerViewModel>();
-        services.AddTransient<AddAirTransportViewModel>();
-    }
+		services.AddTransient<AddAirTransportViewModel>();
+	}
 }

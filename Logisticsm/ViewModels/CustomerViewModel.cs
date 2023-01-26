@@ -1,12 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Logisticsm.DAL;
-using Logisticsm.DAL.Models;
-using Logisticsm.Views;
+using Logisticsm.Repository.Entities;
+using Logisticsm.Repository.Providers;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Logisticsm.ViewModels
 {
@@ -14,7 +12,7 @@ namespace Logisticsm.ViewModels
 	{
 		#region Fields
 
-		private readonly CustomerProvider _customerProvider = new();
+		private readonly CustomerProvider _CustomerProvider = new();
 
 		#endregion
 
@@ -48,10 +46,10 @@ namespace Logisticsm.ViewModels
 			{
 				return new RelayCommand(() =>
 				{
-					var customers = _customerProvider.GetAll();
+					var customers = _CustomerProvider.GetAll();
 					Customers.Clear();
 					customers.ForEach(item => Customers.Add(item));
-                });
+				});
 			}
 		}
 
@@ -64,36 +62,36 @@ namespace Logisticsm.ViewModels
 			{
 				return new RelayCommand(() =>
 				{
-                    Customer customer = new() { Name = "新客戶", MemberId = AppData.Instance.CurrentUser.Id };
-                    var count = _customerProvider.Insert(customer);
-                    if (count > 0)
-                    {
-                        Customers.Add(customer);
-                    }
-                    else
-                    {
-                        MessageBox.Show("插入失敗");
-                    }
-                });
+					Customer customer = new() { Name = "新客戶", MemberId = AppData.Instance.CurrentUser.Id };
+					var count = _CustomerProvider.Insert(customer);
+					if (count > 0)
+					{
+						Customers.Add(customer);
+					}
+					else
+					{
+						MessageBox.Show("插入失敗");
+					}
+				});
 			}
 		}
 
-        /// <summary>
-        /// 刪除一位客戶
-        /// </summary>
-        public RelayCommand<Customer> DeleteCustomerCommand
-        {
-            get
-            {
-                return new RelayCommand<Customer>((customer) =>
-                {
+		/// <summary>
+		/// 刪除一位客戶
+		/// </summary>
+		public RelayCommand<Customer> DeleteCustomerCommand
+		{
+			get
+			{
+				return new RelayCommand<Customer>((customer) =>
+				{
 					if (customer == null) return;
 
-                    App.ServiceProvider.GetRequiredService<MainViewModel>().MamkerVisible = Visibility.Visible;
+					App.ServiceProvider.GetRequiredService<MainViewModel>().MamkerVisible = Visibility.Visible;
 
 					if (MessageBox.Show($"Delete this [ {customer.Name} ]?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
 					{
-						var count = _customerProvider.Delete(customer);
+						var count = _CustomerProvider.Delete(customer);
 						if (count > 0)
 						{
 							Customers.Remove(customer);
@@ -101,23 +99,23 @@ namespace Logisticsm.ViewModels
 					}
 
 					App.ServiceProvider.GetRequiredService<MainViewModel>().MamkerVisible = Visibility.Collapsed;
-              });
-            }
-        }
+				});
+			}
+		}
 
-        #endregion
+		#endregion
 
 
-        #region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		/// 儲存當前修改的資料至資料庫
 		/// </summary>
-        public void Save()
-        {
-            _customerProvider.Save();
-        }
+		public void Save()
+		{
+			_CustomerProvider.Save();
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

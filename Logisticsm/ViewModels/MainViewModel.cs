@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Logisticsm.DAL;
-using Logisticsm.DAL.Models;
+using Logisticsm.Repository.Entities;
 using Logisticsm.Views;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
@@ -10,25 +9,25 @@ using System.Windows.Controls;
 namespace Logisticsm.ViewModels
 {
     public class MainViewModel : ObservableObject
-	{
+    {
 
-		#region Properties
+        #region Properties
 
-		public Member? CurrentUser { get; set; } = null!;
+        public Member? CurrentUser { get; set; } = null!;
 
 
-		private ContentControl _currentPage = null!;
+        private ContentControl _currentPage = null!;
         /// <summary>
         /// 目前頁面
         /// </summary>
         public ContentControl CurrentPage
-		{
-			get => _currentPage;
-			set
-			{
-				SetProperty(ref _currentPage, value);
-			}
-		}
+        {
+            get => _currentPage;
+            set
+            {
+                SetProperty(ref _currentPage, value);
+            }
+        }
 
         private Visibility _mamkerVisible = Visibility.Collapsed;
         /// <summary>
@@ -82,25 +81,25 @@ namespace Logisticsm.ViewModels
         #region Commands
 
         public RelayCommand<object> MenuCommand
-		{
-			get
-			{
-				var command = new RelayCommand<object>((sender) =>
-				{
-					if (sender is RadioButton button)
-					{
-						if (string.IsNullOrEmpty(button.Name)) return;
+        {
+            get
+            {
+                var command = new RelayCommand<object>((sender) =>
+                {
+                    if (sender is RadioButton button)
+                    {
+                        if (string.IsNullOrEmpty(button.Name)) return;
 
-						if (button.Name == CurrentPage.GetType().Name) return;
+                        if (button.Name == CurrentPage.GetType().Name) return;
 
                         Save(CurrentPage);
 
                         SetCurrentPage(button.Name);
                     }
-				});
-				return command;
-			}
-		}
+                });
+                return command;
+            }
+        }
 
         /// <summary>
         /// 關閉頁面時
@@ -126,12 +125,12 @@ namespace Logisticsm.ViewModels
         /// </summary>
         /// <param name="pageType">頁面類型</param>
         private void SetCurrentPage(string pageType)
-		{
+        {
             switch (pageType)
             {
                 case "AirTransportView":
                     CurrentPage = App.ServiceProvider.GetRequiredService<AirTransportView>();
-                    
+
                     break;
                 case "CustomerView":
                     CurrentPage = App.ServiceProvider.GetRequiredService<CustomerView>();
@@ -146,7 +145,7 @@ namespace Logisticsm.ViewModels
         /// </summary>
         /// <param name="currentPage">現在頁面物件</param>
 		private void Save(ContentControl currentPage)
-		{
+        {
             string pageType = currentPage.GetType().Name;
 
             switch (pageType)

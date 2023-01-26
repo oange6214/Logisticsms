@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Logisticsm.DAL.Models;
+using Logisticsm.Repository.Entities;
 
 namespace Logisticsm
 {

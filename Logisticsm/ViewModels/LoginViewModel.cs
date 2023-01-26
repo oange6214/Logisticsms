@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Logisticsm.DAL;
-using Logisticsm.DAL.Models;
 using Logisticsm.Helper;
+using Logisticsm.Repository.Entities;
+using Logisticsm.Repository.Providers;
 using Logisticsm.Windows;
 using System.Windows;
 
@@ -12,7 +12,7 @@ namespace Logisticsm.ViewModels
 	{
 		#region 
 
-		private readonly MemberProvider _memberProvider = new();
+		private readonly MemberProvider _MemberProvider = new();
 
 		#endregion
 
@@ -43,7 +43,7 @@ namespace Logisticsm.ViewModels
 					if (string.IsNullOrEmpty(Member.Name)) return;
 					if (string.IsNullOrEmpty(window?._passwordBox.Password)) return;
 
-					Member? currentUser = _memberProvider.GetAll().FirstOrDefault(item => item.Name == Member.Name);
+					Member? currentUser = _MemberProvider.GetAll().FirstOrDefault(item => item.Name == Member.Name);
 					if (currentUser == null)
 					{
 						MessageBox.Show("無此用戶");

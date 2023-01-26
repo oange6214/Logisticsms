@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Logisticsm.DAL.Models;
+namespace Logisticsm.Repository.Entities;
 
 [Table("AirTransportDetail")]
 public partial class AirTransportDetail
@@ -14,31 +14,31 @@ public partial class AirTransportDetail
     public int Id { get; set; }
 
     [Column("air_transport_id")]
-    public int AirTransportId { get; set; }
+    public int? AirTransportId { get; set; }
 
     [Column("member_id")]
-    public int MemberId { get; set; }
+    public int? MemberId { get; set; }
 
     [Column("receive_date", TypeName = "datetime")]
-    public DateTime ReceiveDate { get; set; }
+    public DateTime? ReceiveDate { get; set; }
 
     [Column("count")]
-    public int Count { get; set; }
+    public int? Count { get; set; }
 
     [Column("weight")]
-    public double Weight { get; set; }
+    public double? Weight { get; set; }
 
     [Column("volume")]
-    public double Volume { get; set; }
-
-    [Column("height")]
-    public double Height { get; set; }
-
-    [Column("width")]
-    public double Width { get; set; }
+    public double? Volume { get; set; }
 
     [Column("length")]
-    public double Length { get; set; }
+    public double? Length { get; set; }
+
+    [Column("width")]
+    public double? Width { get; set; }
+
+    [Column("height")]
+    public double? Height { get; set; }
 
     [Column("insert_date", TypeName = "datetime")]
     public DateTime? InsertDate { get; set; }

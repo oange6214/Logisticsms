@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Logisticsm.DAL;
-using Logisticsm.DAL.Models;
+using Logisticsm.Repository.Entities;
+using Logisticsm.Repository.Providers;
 using Logisticsm.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
@@ -62,10 +62,8 @@ namespace Logisticsm.ViewModels
                 return new RelayCommand(() =>
                 {
                     App.ServiceProvider.GetRequiredService<MainViewModel>().MamkerVisible = Visibility.Visible;
-
                     AddAirTransportWindow addAirTransportWindow = new();
                     addAirTransportWindow.ShowDialog();
-
                     App.ServiceProvider.GetRequiredService<MainViewModel>().MamkerVisible = Visibility.Collapsed;
                 });
             }
@@ -83,7 +81,7 @@ namespace Logisticsm.ViewModels
         public void Save()
         {
             _airTransportProvider.Save();
-        } 
+        }
 
         #endregion
     }
