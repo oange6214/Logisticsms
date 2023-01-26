@@ -101,8 +101,11 @@
             Grid.Row="2"
             HorizontalAlignment="Left"
             Orientation="Horizontal">
-            <Button Content="新增單號" Style="{StaticResource ButtonStyle}" />
-            <Button Content="新增單號" Style="{StaticResource ButtonStyle}" />
+            <Button
+                Command="{Binding InsertAirTransportCommand}"
+                Content="新增單號"
+                Style="{StaticResource ButtonStyle}" />
+            <!--<Button Content="新增單號" Style="{StaticResource ButtonStyle}" />-->
         </StackPanel>
 
         <!--  備註  -->

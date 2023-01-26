@@ -35,7 +35,8 @@ public partial class App : Application
 		services.AddSingleton<LoginWindow>();
 		services.AddTransient<AirTransportView>();
 		services.AddTransient<CustomerView>();
-	}
+		services.AddTransient<AddAirTransportWindow>();
+    }
 
 	private void ViewModelServices(HostBuilderContext hostBuilderContext, IServiceCollection services)
 	{
@@ -43,5 +44,6 @@ public partial class App : Application
 		services.AddSingleton<LoginViewModel>();
 		services.AddTransient<AirTransportViewModel>();
 		services.AddTransient<CustomerViewModel>();
-	}
+        services.AddTransient<AddAirTransportViewModel>();
+    }
 }

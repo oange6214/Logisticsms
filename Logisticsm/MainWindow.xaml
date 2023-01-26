@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="clr-namespace:Logisticsm.Views"
     Width="1500"
-    Height="800"
+    Height="845"
     DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
@@ -102,19 +102,22 @@
                             FontSize="16"
                             GroupName="menu"
                             Style="{StaticResource RadioButtonStyle}"
-                            Tag="Solid_Plane" />
+                            Tag="Solid_Plane"
+                            ToolTip="空運分頁" />
                         <RadioButton
                             Content="海運分頁"
                             FontSize="16"
                             GroupName="menu"
                             Style="{StaticResource RadioButtonStyle}"
-                            Tag="Solid_Ship" />
+                            Tag="Solid_Ship"
+                            ToolTip="海運分頁" />
                         <RadioButton
                             Content="快遞分頁"
                             FontSize="16"
                             GroupName="menu"
                             Style="{StaticResource RadioButtonStyle}"
-                            Tag="Brands_Dropbox" />
+                            Tag="Brands_Dropbox"
+                            ToolTip="快遞分頁" />
                         <RadioButton
                             x:Name="CustomerView"
                             Command="{Binding MenuCommand}"
@@ -123,19 +126,22 @@
                             FontSize="16"
                             GroupName="menu"
                             Style="{StaticResource RadioButtonStyle}"
-                            Tag="Solid_UserGroup" />
+                            Tag="Solid_UserGroup"
+                            ToolTip="客戶管理" />
                         <RadioButton
                             Content="財務管理"
                             FontSize="16"
                             GroupName="menu"
                             Style="{StaticResource RadioButtonStyle}"
-                            Tag="Solid_CircleDollarToSlot" />
+                            Tag="Solid_CircleDollarToSlot"
+                            ToolTip="財務管理" />
                         <RadioButton
                             Content="系統設置"
                             FontSize="16"
                             GroupName="menu"
                             Style="{StaticResource RadioButtonStyle}"
-                            Tag="Solid_Gears" />
+                            Tag="Solid_Gears"
+                            ToolTip="系統設置" />
                     </StackPanel>
 
                     <ContentControl

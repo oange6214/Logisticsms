@@ -14,7 +14,7 @@ namespace Logisticsm.ViewModels
 	{
 		#region Fields
 
-		private readonly CustomerProvider _customerProvider = new CustomerProvider();
+		private readonly CustomerProvider _customerProvider = new();
 
 		#endregion
 
@@ -22,7 +22,9 @@ namespace Logisticsm.ViewModels
 		#region Properties
 
 		private ObservableCollection<Customer> _customers = new();
-
+		/// <summary>
+		/// 客戶
+		/// </summary>
 		public ObservableCollection<Customer> Customers
 		{
 			get => _customers;
@@ -108,6 +110,9 @@ namespace Logisticsm.ViewModels
 
         #region Public Methods
 
+		/// <summary>
+		/// 儲存當前修改的資料至資料庫
+		/// </summary>
         public void Save()
         {
             _customerProvider.Save();

@@ -8,5 +8,6 @@ namespace Logisticsm.ViewModels
 		public LoginViewModel Login => App.ServiceProvider.GetRequiredService<LoginViewModel>();
 		public CustomerViewModel Customer => App.ServiceProvider.GetRequiredService<CustomerViewModel>();
 		public AirTransportViewModel AirTransport => App.ServiceProvider.GetRequiredService<AirTransportViewModel>();
-	}
+		public AddAirTransportViewModel AddAirTransport => App.ServiceProvider.GetRequiredService<AddAirTransportViewModel>();
+    }
 }

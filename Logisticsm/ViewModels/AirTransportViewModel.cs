@@ -2,7 +2,10 @@
 using CommunityToolkit.Mvvm.Input;
 using Logisticsm.DAL;
 using Logisticsm.DAL.Models;
+using Logisticsm.Windows;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Logisticsm.ViewModels
 {
@@ -13,8 +16,6 @@ namespace Logisticsm.ViewModels
         private readonly AirTransportProvider _airTransportProvider = new();
 
         #endregion
-
-
 
 
         #region Properties
@@ -51,30 +52,24 @@ namespace Logisticsm.ViewModels
             }
         }
 
+        /// <summary>
+        /// 新增一個空運單號
+        /// </summary>
+        public RelayCommand InsertAirTransportCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    App.ServiceProvider.GetRequiredService<MainViewModel>().MamkerVisible = Visibility.Visible;
 
+                    AddAirTransportWindow addAirTransportWindow = new();
+                    addAirTransportWindow.ShowDialog();
 
-        ///// <summary>
-        ///// 新增一位客戶
-        ///// </summary>
-        //public RelayCommand InsertCustomerCommand
-        //{
-        //    get
-        //    {
-        //        return new RelayCommand(() =>
-        //        {
-        //            Customer customer = new() { Name = "新客戶" };
-        //            var count = _customerProvider.Insert(customer);
-        //            if (count > 0)
-        //            {
-        //                Customers.Add(customer);
-        //            }
-        //            else
-        //            {
-        //                MessageBox.Show("插入失敗");
-        //            }
-        //        });
-        //    }
-        //}
+                    App.ServiceProvider.GetRequiredService<MainViewModel>().MamkerVisible = Visibility.Collapsed;
+                });
+            }
+        }
 
         #endregion
 
@@ -82,6 +77,9 @@ namespace Logisticsm.ViewModels
 
         #region Public Methods
 
+        /// <summary>
+        /// 儲存當前修改的資料至資料庫
+        /// </summary>
         public void Save()
         {
             _airTransportProvider.Save();

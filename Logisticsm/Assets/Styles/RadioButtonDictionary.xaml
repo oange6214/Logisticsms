@@ -19,7 +19,7 @@
                         Background="Transparent">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
-                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="120" />
                         </Grid.ColumnDefinitions>
 
                         <Border
