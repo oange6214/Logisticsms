@@ -14,8 +14,8 @@ public partial class App : Application
 	public App()
 	{
 		var host = Host.CreateDefaultBuilder()
-			.ConfigureServices(WindowServices)
-			.ConfigureServices(ViewModelServices)
+            .ConfigureServices(ViewModelServices)
+            .ConfigureServices(WindowServices)
 			.Build();
 
 		ServiceProvider = host.Services;
@@ -33,17 +33,19 @@ public partial class App : Application
 	{
 		services.AddSingleton<MainWindow>();
 		services.AddSingleton<LoginWindow>();
-		services.AddTransient<AirTransportView>();
-		services.AddTransient<CustomerView>();
+		services.AddSingleton<AirTransportView>();
+		services.AddSingleton<CustomerView>();
 		services.AddTransient<AddAirTransportWindow>();
+		services.AddTransient<EditAirTransportWindow>();
     }
 
 	private void ViewModelServices(HostBuilderContext hostBuilderContext, IServiceCollection services)
 	{
 		services.AddSingleton<MainViewModel>();
 		services.AddSingleton<LoginViewModel>();
-		services.AddTransient<AirTransportViewModel>();
-		services.AddTransient<CustomerViewModel>();
-		services.AddTransient<AddAirTransportViewModel>();
-	}
+		services.AddSingleton<AirTransportViewModel>();
+		services.AddSingleton<CustomerViewModel>();
+        services.AddTransient<AddAirTransportViewModel>(); 
+		services.AddTransient<EditAirTransportViewModel>();
+    }
 }

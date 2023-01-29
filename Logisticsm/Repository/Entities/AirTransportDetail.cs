@@ -46,4 +46,8 @@ public partial class AirTransportDetail
     [Column("tag")]
     [StringLength(128)]
     public string? Tag { get; set; }
+
+    [ForeignKey("AirTransportId")]
+    [InverseProperty("AirTransportDetails")]
+    public virtual AirTransport AirTransport { get; set; } = null!;
 }

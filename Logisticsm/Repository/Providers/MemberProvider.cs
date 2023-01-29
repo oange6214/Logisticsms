@@ -16,6 +16,11 @@ public class MemberProvider : ProviderBase, IProvider<Member>
         return db.Members.ToList();
     }
 
+    public Member GetItemById(int id)
+    {
+        return db.Members.First(item => item.Id == id);
+    }
+
     public int Insert(Member entity)
     {
         db.Entry(entity).State = EntityState.Added;

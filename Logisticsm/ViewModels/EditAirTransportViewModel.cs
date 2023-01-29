@@ -4,13 +4,19 @@ using Logisticsm.Repository.Entities;
 using Logisticsm.Repository.Providers;
 using Logisticsm.Windows;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Logisticsm.ViewModels
 {
-    public class AddAirTransportViewModel : ObservableObject
+    public class EditAirTransportViewModel : ObservableObject
     {
+
         #region Fields
 
         private readonly CustomerProvider _customerProvider = new();
@@ -54,7 +60,7 @@ namespace Logisticsm.ViewModels
         public AirTransport AirTransport
         {
             get => _airTransport;
-            set
+            set                          
             {
                 SetProperty(ref _airTransport, value);
             }
@@ -72,8 +78,9 @@ namespace Logisticsm.ViewModels
                 SetProperty(ref _airTransportDetails, value);
             }
         }
-
+         
         #endregion
+
 
         #region Commands
 
@@ -86,35 +93,31 @@ namespace Logisticsm.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    // 載入當前單號
+                    AirTransport = _airTransportProvider.GetItemById(AirTransport.Id);
+
+                    // 載入全部客戶
                     var customers = _customerProvider.GetAll();
                     Customers.Clear();
-                    customers.ForEach(item => Customers.Add(item));
+                    foreach (var item in customers)
+                    {
+                        Customers.Add(item);
+                    }
+
+                    // 當前客戶
+                    Customer = Customers.FirstOrDefault(t => t.Id == AirTransport.CustomerId);
+
+                    // 載入當前單號的詳細記錄
+                    var airTransportDetails = _airTransportDetailProvider.GetAll().FindAll(t => t.AirTransportId == AirTransport.Id);
+                    AirTransportDetails.Clear();
+                    foreach(var item in airTransportDetails)
+                    {
+                        AirTransportDetails.Add(item);
+                        item.AirTransport = AirTransport;
+                    }
+
                     AirTransport.AirTransportDetails = AirTransportDetails;
-                });
-            }
-        }
-
-
-
-        /// <summary>
-        /// 按下一步
-        /// </summary>
-        public RelayCommand<AddAirTransportWindow> NextStepCommand
-        {
-            get
-            {
-                return new RelayCommand<AddAirTransportWindow>((window) =>
-                {
-                    if (Customer == null) return;
-                    if (string.IsNullOrEmpty(AirTransport.TargetPlace)) return;
-                    if (AirTransport?.SendDate == null) return;
-
-                    window.firstGrid.Visibility = Visibility.Collapsed;
-                    window.secondGrid.Visibility = Visibility.Visible;
-
-                    AirTransport.CustomerId = _customers.FirstOrDefault(t => t.Name == Customer.Name)?.Id;
-                    AirTransport.MemberId = AppData.Instance.CurrentUser.Id;
-                    _airTransportProvider.Insert(AirTransport);
+                    AirTransport.UpdateProperties();
                 });
             }
         }
@@ -122,11 +125,11 @@ namespace Logisticsm.ViewModels
         /// <summary>
         /// 增加空運詳細記錄
         /// </summary>
-        public RelayCommand AddDetailCommand
+        public RelayCommand<AirTransportDetail> AddDetailCommand
         {
             get
             {
-                return new RelayCommand(() =>
+                return new RelayCommand<AirTransportDetail>((e) =>
                 {
                     AirTransportDetail entity = new()
                     {
@@ -158,6 +161,8 @@ namespace Logisticsm.ViewModels
                     count += _airTransportProvider.Save();
                     count += _airTransportDetailProvider.Save();
 
+                    //AirTransport.UpdateProperties();
+
                     string message = count > 0 ? "操作成功" : "操作失敗";
 
                     MessageBox.Show(message);
@@ -168,7 +173,7 @@ namespace Logisticsm.ViewModels
         }
 
         /// <summary>
-        /// 按下關閉鈕
+        /// 儲存並關閉
         /// </summary>
         public RelayCommand<Window> CloseCommand
         {
@@ -190,20 +195,19 @@ namespace Logisticsm.ViewModels
         {
             get
             {
-                return new RelayCommand<AirTransportDetail>((airTransportDetail) =>
+                return new RelayCommand<AirTransportDetail>((entity) =>
                 {
-                    if (airTransportDetail == null) return;
+                    if (entity == null) return;
 
-                    if (MessageBox.Show($"Delete this [ {airTransportDetail.Id} ]?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (MessageBox.Show($"Delete this [ {entity.Id} ]?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        var count = _airTransportDetailProvider.Delete(airTransportDetail);
+                        var count = _airTransportDetailProvider.Delete(entity);
                         if (count > 0)
                         {
-                            AirTransportDetails.Remove(airTransportDetail);
+                            AirTransportDetails.Remove(entity);
                         }
                         AirTransport.UpdateProperties();
                     }
-
                 });
             }
         }

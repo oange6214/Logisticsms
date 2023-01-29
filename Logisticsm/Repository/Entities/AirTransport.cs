@@ -44,4 +44,11 @@ public partial class AirTransport
     [Column("tag")]
     [StringLength(512)]
     public string? Tag { get; set; }
+
+    [InverseProperty("AirTransport")]
+    public virtual ICollection<AirTransportDetail> AirTransportDetails { get; set; } = new List<AirTransportDetail>();
+
+    [ForeignKey("CustomerId")]
+    [InverseProperty("AirTransports")]
+    public virtual Customer? Customer { get; set; }
 }

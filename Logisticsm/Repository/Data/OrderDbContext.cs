@@ -42,11 +42,15 @@ public partial class OrderDbContext : DbContext
         modelBuilder.Entity<AirTransport>(entity =>
         {
             entity.Property(e => e.InsertDate).HasDefaultValueSql("(getdate())");
+
+            entity.HasOne(d => d.Customer).WithMany(p => p.AirTransports).HasConstraintName("FK_AirTransport_Customer");
         });
 
         modelBuilder.Entity<AirTransportDetail>(entity =>
         {
             entity.Property(e => e.InsertDate).HasDefaultValueSql("(getdate())");
+
+            entity.HasOne(d => d.AirTransport).WithMany(p => p.AirTransportDetails).HasConstraintName("FK_AirTransportDetail_AirTransport");
         });
 
         modelBuilder.Entity<Customer>(entity =>

@@ -16,6 +16,11 @@ public class CustomerProvider : ProviderBase, IProvider<Customer>
         return db.Customers.ToList();
     }
 
+    public Customer GetItemById(int id)
+    {
+        return db.Customers.First(item => item.Id == id);
+    }
+
     public int Insert(Customer entity)
     {
         db.Entry(entity).State = EntityState.Added;

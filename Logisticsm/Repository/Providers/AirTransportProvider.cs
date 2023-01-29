@@ -13,7 +13,12 @@ public class AirTransportProvider : ProviderBase, IProvider<AirTransport>
 
     public List<AirTransport> GetAll()
     {
-        return db.AirTransports.ToList();
+        return db.AirTransports.OrderByDescending(t => t.Id).ToList();
+    }
+
+    public AirTransport GetItemById(int id)
+    {
+        return db.AirTransports.First(item => item.Id == id);
     }
 
     public int Insert(AirTransport entity)

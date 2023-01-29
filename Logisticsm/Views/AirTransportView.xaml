@@ -7,8 +7,8 @@
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:Logisticsm.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignHeight="550"
+    d:DesignWidth="1000"
     DataContext="{Binding Source={StaticResource Locator}, Path=AirTransport}"
     mc:Ignorable="d">
 
@@ -48,50 +48,81 @@
             CellStyle="{StaticResource GeneralDataGridCellStyle}"
             ItemsSource="{Binding AirTransports}"
             RowStyle="{StaticResource GeneralDataGridRowStyle}"
+            SelectedItem="{Binding AirTransport}"
             Style="{StaticResource GeneralDataGridStyle}">
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding DataGridMouseDoubleClickCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
             <DataGrid.Columns>
 
-                <DataGridTextColumn
-                    Width="60"
-                    Binding="{Binding Id}"
-                    Header="編號" />
-
-                <DataGridTemplateColumn Width="150" Header="客戶名稱">
+                <DataGridTemplateColumn Width="150" Header="發貨時間">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding SendDate, StringFormat={}{0:yyyy-MM-dd}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Width="150" Header="電話">
+
+                <DataGridTemplateColumn Width="150" Header="客戶">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Telphone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Customer.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Width="200" Header="國家">
+                <DataGridTemplateColumn Width="150" Header="單號">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Nation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding OrderNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Width="300" Header="地址">
+                <DataGridTemplateColumn Width="150" Header="起運地">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding SourcePlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTextColumn
-                    Width="150"
-                    Binding="{Binding InsertDate}"
-                    Header="建立時間" />
+                <DataGridTemplateColumn Width="150" Header="目的地">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding TargetPlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="150" Header="件數">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding SumCount}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="150" Header="體積">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding SumVolume}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="150" Header="重量">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding SumWeight}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
             </DataGrid.Columns>
         </DataGrid>
@@ -105,16 +136,14 @@
                 Command="{Binding InsertAirTransportCommand}"
                 Content="新增單號"
                 Style="{StaticResource ButtonStyle}" />
-            <!--<Button Content="新增單號" Style="{StaticResource ButtonStyle}" />-->
+            <Button
+                Command="{Binding InsertAirTransportCommand}"
+                Content="刪除單號"
+                Style="{StaticResource ButtonStyle}" />
         </StackPanel>
 
         <!--  備註  -->
-        <StackPanel
-            Grid.Row="3"
-            HorizontalAlignment="Right"
-            Orientation="Horizontal">
-            <TextBlock Text="" />
-        </StackPanel>
+        <TextBox Grid.Row="3" Text="{Binding AirTransport.Tag}" />
 
     </Grid>
 

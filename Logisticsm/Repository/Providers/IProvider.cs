@@ -7,4 +7,5 @@ public interface IProvider<T> where T : class
     int Delete(T entity);
     List<T> GetAll();
     int Save();
+    T GetItemById(int id);
 }
