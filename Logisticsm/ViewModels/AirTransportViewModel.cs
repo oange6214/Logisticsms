@@ -128,6 +128,7 @@ namespace Logisticsm.ViewModels
 
                     EditAirTransportWindow editAirTransportWindow = new();
                     (editAirTransportWindow.DataContext as EditAirTransportViewModel).AirTransport = AirTransport;
+                    (editAirTransportWindow.DataContext as EditAirTransportViewModel).SetProvider(_customerProvider, _airTransportProvider, _airTransportDetailProvider);
                     editAirTransportWindow.ShowDialog();
                     Load((editAirTransportWindow.DataContext as EditAirTransportViewModel).AirTransport);
                     AirTransport.UpdateProperties();

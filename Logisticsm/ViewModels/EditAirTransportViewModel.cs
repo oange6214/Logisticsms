@@ -16,12 +16,11 @@ namespace Logisticsm.ViewModels
 {
     public class EditAirTransportViewModel : ObservableObject
     {
-
         #region Fields
 
-        private readonly CustomerProvider _customerProvider = new();
-        private readonly AirTransportProvider _airTransportProvider = new();
-        private readonly AirTransportDetailProvider _airTransportDetailProvider = new();
+        private CustomerProvider _customerProvider = new();
+        private AirTransportProvider _airTransportProvider = new();
+        private AirTransportDetailProvider _airTransportDetailProvider = new();
 
         #endregion
 
@@ -210,6 +209,17 @@ namespace Logisticsm.ViewModels
                     }
                 });
             }
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public void SetProvider(CustomerProvider customerProvider, AirTransportProvider airTransportProvider, AirTransportDetailProvider airTransportDetailProvider)
+        {
+            _customerProvider = customerProvider;
+            _airTransportProvider = airTransportProvider;
+            _airTransportDetailProvider = airTransportDetailProvider;
         }
 
         #endregion

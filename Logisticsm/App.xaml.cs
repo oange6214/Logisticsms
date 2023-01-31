@@ -1,4 +1,5 @@
-﻿using Logisticsm.ViewModels;
+﻿using Logisticsm.Repository.Providers;
+using Logisticsm.ViewModels;
 using Logisticsm.Views;
 using Logisticsm.Windows;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,8 +11,11 @@ namespace Logisticsm;
 public partial class App : Application
 {
 	public static IServiceProvider ServiceProvider { get; private set; } = null!;
+    private readonly CustomerProvider _customerProvider = new();
+    private readonly AirTransportProvider _airTransportProvider = new();
+    private readonly AirTransportDetailProvider _airTransportDetailProvider = new();
 
-	public App()
+    public App()
 	{
 		var host = Host.CreateDefaultBuilder()
             .ConfigureServices(ViewModelServices)
