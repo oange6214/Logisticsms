@@ -1,0 +1,158 @@
+﻿<UserControl
+    x:Class="Logisticsm.Views.SeaTransportView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.com/icons/fonts"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:Logisticsm.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="550"
+    d:DesignWidth="1000"
+    DataContext="{Binding Source={StaticResource Locator}, Path=SeaTransport}"
+    mc:Ignorable="d">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
+
+        <!--  標題與按鈕  -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <fa:FontAwesome
+                Margin="0,0,10,0"
+                VerticalAlignment="Center"
+                FontSize="18"
+                Foreground="Black"
+                Icon="Solid_ChevronRight" />
+
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="20"
+                Text="海運單號管理" />
+        </StackPanel>
+
+        <!--  表格內容  -->
+        <DataGrid
+            Grid.Row="1"
+            CellStyle="{StaticResource GeneralDataGridCellStyle}"
+            ItemsSource="{Binding SeaTransports}"
+            RowStyle="{StaticResource GeneralDataGridRowStyle}"
+            SelectedItem="{Binding SeaTransport}"
+            Style="{StaticResource GeneralDataGridStyle}">
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding DataGridMouseDoubleClickCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+            <DataGrid.Columns>
+
+                <DataGridTemplateColumn Width="150" Header="發貨時間">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding SendDate, StringFormat={}{0:yyyy-MM-dd}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+
+                <DataGridTemplateColumn Width="150" Header="客戶">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Customer.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="150" Header="櫃型">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding BoxModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="150" Header="櫃號">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding BoxNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="150" Header="起運地">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding SourcePlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="150" Header="目的地">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding TargetPlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="150" Header="件數">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Count}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="150" Header="體積">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Volume}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="150" Header="重量">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Weight}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!--  操作按鈕  -->
+        <StackPanel
+            Grid.Row="2"
+            HorizontalAlignment="Left"
+            Orientation="Horizontal">
+            <Button
+                Command="{Binding InsertSeaTransportCommand}"
+                Content="新增單號"
+                Style="{StaticResource ButtonStyle}" />
+            <Button
+                Command="{Binding InsertSeaTransportCommand}"
+                Content="刪除單號"
+                Style="{StaticResource ButtonStyle}" />
+        </StackPanel>
+
+        <!--  備註  -->
+        <TextBox Grid.Row="3" Text="{Binding SeaTransport.Tag}" />
+
+    </Grid>
+
+</UserControl>

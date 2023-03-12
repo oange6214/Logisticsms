@@ -77,6 +77,17 @@ public partial class OrderDbContext : DbContext
         modelBuilder.Entity<SeaTransport>(entity =>
         {
             entity.Property(e => e.InsertDate).HasDefaultValueSql("(getdate())");
+
+            entity.HasOne(d => d.Customer).WithMany(p => p.SeaTransports)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SeaTransport_Customer");
+        });
+
+        modelBuilder.Entity<SeaTransportDetail>(entity =>
+        {
+            entity.HasOne(d => d.SeaTransport).WithMany(p => p.SeaTransportDetails)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SeaTransportDetail_SeaTransport");
         });
 
         OnModelCreatingPartial(modelBuilder);

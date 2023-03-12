@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace Logisticsm.Repository.Entities;
 
@@ -17,44 +14,51 @@ public partial class SeaTransport
     public int MemberId { get; set; }
 
     [Column("customer_id")]
-    public int CustomerId { get; set; }
+    public int? CustomerId { get; set; }
 
     [Column("send_date", TypeName = "datetime")]
-    public DateTime SendDate { get; set; }
+    public DateTime? SendDate { get; set; }
 
     [Column("box_model")]
     [StringLength(64)]
-    public string BoxModel { get; set; } = null!;
+    public string? BoxModel { get; set; }
 
     [Column("box_number")]
     [StringLength(64)]
-    public string BoxNumber { get; set; } = null!;
+    public string? BoxNumber { get; set; }
 
     [Column("batch")]
     [StringLength(64)]
-    public string Batch { get; set; } = null!;
+    public string? Batch { get; set; }
 
     [Column("count")]
-    public int Count { get; set; }
+    public int? Count { get; set; }
 
     [Column("volume")]
-    public double Volume { get; set; }
+    public double? Volume { get; set; }
 
     [Column("weight")]
-    public double Weight { get; set; }
+    public double? Weight { get; set; }
 
     [Column("source_place")]
     [StringLength(50)]
-    public string SourcePlace { get; set; } = null!;
+    public string? SourcePlace { get; set; }
 
     [Column("target_place")]
     [StringLength(50)]
-    public string TargetPlace { get; set; } = null!;
+    public string? TargetPlace { get; set; }
 
     [Column("insert_date", TypeName = "datetime")]
     public DateTime? InsertDate { get; set; }
 
     [Column("tag")]
-    [StringLength(512)]
+    [StringLength(128)]
     public string? Tag { get; set; }
+
+    [ForeignKey("CustomerId")]
+    [InverseProperty("SeaTransports")]
+    public virtual Customer Customer { get; set; } = null!;
+
+    [InverseProperty("SeaTransport")]
+    public virtual ICollection<SeaTransportDetail> SeaTransportDetails { get; set; } = new List<SeaTransportDetail>();
 }

@@ -2,21 +2,25 @@
 using CommunityToolkit.Mvvm.Input;
 using Logisticsm.Repository.Entities;
 using Logisticsm.Repository.Providers;
-using Logisticsm.Views;
 using Logisticsm.Windows;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
-namespace Logisticsm.ViewModels
+namespace Logisticsm.ViewModels.SeaTransports
 {
-    public class AirTransportViewModel : ObservableObject
+    public class SeaTransportViewModel : ObservableObject
     {
         #region Fields
 
         private readonly CustomerProvider _customerProvider = new();
-        private readonly AirTransportProvider _airTransportProvider = new();
-        private readonly AirTransportDetailProvider _airTransportDetailProvider = new();
+        private readonly SeaTransportProvider _seaTransportProvider = new();
+        private readonly SeaTransportDetailProvider _seaTransportDetailProvider = new();
 
         #endregion
 
@@ -36,43 +40,43 @@ namespace Logisticsm.ViewModels
             }
         }
 
-        private ObservableCollection<AirTransport> _airTransports = new();
+        private ObservableCollection<SeaTransport> _seaTransports = new();
         /// <summary>
         /// 空運單號群
         /// </summary>
-        public ObservableCollection<AirTransport> AirTransports
+        public ObservableCollection<SeaTransport> SeaTransports
         {
-            get => _airTransports;
+            get => _seaTransports;
             set
             {
-                SetProperty(ref _airTransports, value);
+                SetProperty(ref _seaTransports, value);
             }
         }
 
-        private ObservableCollection<AirTransportDetail> _airTransportDetails = new();
+        private ObservableCollection<SeaTransportDetail> _seaTransportDetails = new();
         /// <summary>
         /// 空軍詳細群
         /// </summary>
-        public ObservableCollection<AirTransportDetail> AirTransportDetails
+        public ObservableCollection<SeaTransportDetail> SeaTransportDetails
         {
-            get => _airTransportDetails;
+            get => _seaTransportDetails;
             set
             {
-                SetProperty(ref _airTransportDetails, value);
+                SetProperty(ref _seaTransportDetails, value);
             }
         }
 
 
-        private AirTransport _airTransport = new();
+        private SeaTransport _seaTransport = new();
         /// <summary>
         /// DataGrid 空運單號
         /// </summary>
-        public AirTransport AirTransport
+        public SeaTransport SeaTransport
         {
-            get => _airTransport;
+            get => _seaTransport;
             set
             {
-                SetProperty(ref _airTransport, value);
+                SetProperty(ref _seaTransport, value);
             }
         }
 
@@ -98,7 +102,7 @@ namespace Logisticsm.ViewModels
         /// <summary>
         /// 新增空運單號
         /// </summary>
-        public RelayCommand InsertAirTransportCommand
+        public RelayCommand InsertSeaTransportCommand
         {
             get
             {
@@ -106,8 +110,8 @@ namespace Logisticsm.ViewModels
                 {
                     App.ServiceProvider.GetRequiredService<MainViewModel>().MamkerVisible = Visibility.Visible;
 
-                    AddAirTransportWindow addAirTransportWindow = new();
-                    addAirTransportWindow.ShowDialog();
+                    AddSeaTransportWindow addSeaTransportWindow = new();
+                    addSeaTransportWindow.ShowDialog();
                     Load(null);
 
                     App.ServiceProvider.GetRequiredService<MainViewModel>().MamkerVisible = Visibility.Collapsed;
@@ -126,12 +130,12 @@ namespace Logisticsm.ViewModels
                 {
                     App.ServiceProvider.GetRequiredService<MainViewModel>().MamkerVisible = Visibility.Visible;
 
-                    EditAirTransportWindow editAirTransportWindow = new();
-                    (editAirTransportWindow.DataContext as EditAirTransportViewModel).AirTransport = AirTransport;
-                    (editAirTransportWindow.DataContext as EditAirTransportViewModel).SetProvider(_customerProvider, _airTransportProvider, _airTransportDetailProvider);
-                    editAirTransportWindow.ShowDialog();
-                    Load((editAirTransportWindow.DataContext as EditAirTransportViewModel).AirTransport);
-                    AirTransport.UpdateProperties();
+                    EditSeaTransportWindow editSeaTransportWindow = new();
+                    (editSeaTransportWindow.DataContext as EditSeaTransportViewModel).SeaTransport = SeaTransport;
+                    (editSeaTransportWindow.DataContext as EditSeaTransportViewModel).SetProvider(_customerProvider, _seaTransportProvider, _seaTransportDetailProvider);
+                    editSeaTransportWindow.ShowDialog();
+                    Load((editSeaTransportWindow.DataContext as EditSeaTransportViewModel).SeaTransport);
+                    SeaTransport.UpdateProperties();
 
                     App.ServiceProvider.GetRequiredService<MainViewModel>().MamkerVisible = Visibility.Collapsed;
                 });
@@ -148,46 +152,43 @@ namespace Logisticsm.ViewModels
         /// </summary>
         public void Save()
         {
-            _airTransportProvider.Save();
-            _airTransportDetailProvider.Save();
+            _seaTransportProvider.Save();
+            _seaTransportDetailProvider.Save();
         }
 
-        public Task Load(AirTransport entity)
+        public Task Load(SeaTransport? entity)
         {
             return Task.Run(() =>
             {
-                App.Current.Dispatcher.Invoke(() =>
+                Application.Current.Dispatcher.Invoke(() =>
                 {
                     // 所有庫戶
-                    var customers = _customerProvider.GetAll();
                     Customers.Clear();
-                    foreach (var customer in customers)
+                    foreach (var customer in _customerProvider.GetAll())
                     {
                         Customers.Add(customer);
                     }
 
                     // 所有詳情單號
-                    var airTransportDetails = _airTransportDetailProvider.GetAll();
-                    AirTransportDetails.Clear();
-                    foreach (var item in airTransportDetails)
+                    SeaTransportDetails.Clear();
+                    foreach (var item in _seaTransportDetailProvider.GetAll())
                     {
-                        AirTransportDetails.Add(item);
+                        SeaTransportDetails.Add(item);
                     }
 
                     // 所有單號
-                    var airTransports = _airTransportProvider.GetAll();
-                    AirTransports.Clear();
-                    foreach (var item in airTransports)
+                    SeaTransports.Clear();
+                    foreach (var item in _seaTransportProvider.GetAll())
                     {
-                        item.AirTransportDetails.Clear();
-                        AirTransports.Add(item);
+                        item.SeaTransportDetails.Clear();
+                        SeaTransports.Add(item);
 
-                        var children = AirTransportDetails.Where(t => t.AirTransportId == item.Id).ToList();
-                        children.ForEach(child => item.AirTransportDetails.Add(child));
+                        var children = SeaTransportDetails.Where(t => t.SeaTransportId == item.Id).ToList();
+                        children.ForEach(child => item.SeaTransportDetails.Add(child));
 
-                        item.SumCount = (int)item.AirTransportDetails.Sum(t => t.Count);
-                        item.SumWeight = (int)item.AirTransportDetails.Sum(t => t.Weight);
-                        item.SumVolume = (int)item.AirTransportDetails.Sum(t => t.Volume);
+                        item.SumCount = (int)item.SeaTransportDetails.Sum(t => t.Count);
+                        //item.SumWeight = (int)item.SeaTransportDetails.Sum(t => t.Weight);
+                        item.SumVolume = (int)item.SeaTransportDetails.Sum(t => t.Volume);
                         item.Customer = Customers.FirstOrDefault(t => t.Id == item.CustomerId);
                     }
 

@@ -1,18 +1,18 @@
 ﻿<Window
-    x:Class="Logisticsm.Views.EditAirTransportWindow"
+    x:Class="Logisticsm.Windows.EditSeaTransportWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-    xmlns:local="clr-namespace:Logisticsm.Views"
+    xmlns:local="clr-namespace:Logisticsm.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Name="editAirTransportWindow"
-    Title="修改空運單號"
+    x:Name="editSeaTransportWindow"
+    Title="修改海運單號"
     Width="1000"
     Height="600"
     AllowsTransparency="True"
     Background="Transparent"
-    DataContext="{Binding Source={StaticResource Locator}, Path=EditTransport}"
+    DataContext="{Binding Source={StaticResource Locator}, Path=EditSeaTransport}"
     WindowStartupLocation="CenterScreen"
     WindowState="Normal"
     WindowStyle="None"
@@ -33,7 +33,7 @@
 
             <Button
                 Command="{Binding CloseCommand}"
-                CommandParameter="{Binding ElementName=editAirTransportWindow}"
+                CommandParameter="{Binding ElementName=editSeaTransportWindow}"
                 Style="{StaticResource CloseStyle}" />
 
             <!--  標題  -->
@@ -41,7 +41,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="18"
-                Text="修改空運單號" />
+                Text="修改海運單號" />
 
             <Grid Grid.Row="1" Margin="10,0,10,0">
                 <Grid.RowDefinitions>
@@ -79,7 +79,6 @@
                             <RowDefinition Height="35" />
                             <RowDefinition Height="35" />
                             <RowDefinition Height="35" />
-                            <RowDefinition Height="35" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" />
@@ -89,65 +88,37 @@
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="0"
-                            Text="單號" />
-
+                            Text="櫃型" />
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="0"
-                            Text="起始地" />
+                            Text="櫃號" />
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="0"
-                            Text="目的地" />
+                            Text="起始地" />
                         <TextBlock
                             Grid.Row="3"
                             Grid.Column="0"
-                            Text="貨物密度" />
-                        <TextBlock
-                            Grid.Row="4"
-                            Grid.Column="0"
-                            Text="客戶選擇" />
-                        <TextBlock
-                            Grid.Row="5"
-                            Grid.Column="0"
-                            Text="出貨時間" />
+                            Text="目的地" />
 
                         <TextBox
                             Grid.Row="0"
                             Grid.Column="1"
-                            Text="{Binding AirTransport.OrderNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
+                            Text="{Binding SeaTransport.BoxModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBox
                             Grid.Row="1"
                             Grid.Column="1"
-                            Text="{Binding AirTransport.SourcePlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding SeaTransport.BoxNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBox
                             Grid.Row="2"
                             Grid.Column="1"
-                            Text="{Binding AirTransport.TargetPlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding SeaTransport.SourcePlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBox
                             Grid.Row="3"
                             Grid.Column="1"
-                            Background="LightGray"
-                            IsReadOnly="True"
-                            Text="{Binding AirTransport.SumDensity, Mode=OneWay}" />
-                        <ComboBox
-                            Grid.Row="4"
-                            Grid.Column="1"
-                            Height="25"
-                            MinWidth="200"
-                            Margin="3"
-                            DisplayMemberPath="Name"
-                            ItemsSource="{Binding Customers}"
-                            SelectedItem="{Binding Customer}" />
-                        <DatePicker
-                            Grid.Row="5"
-                            Grid.Column="1"
-                            Height="25"
-                            MinWidth="200"
-                            Margin="3"
-                            VerticalAlignment="Center"
-                            SelectedDate="{Binding AirTransport.SendDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding SeaTransport.TargetPlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
                     </Grid>
 
                     <!--  輸入項 右  -->
@@ -183,24 +154,18 @@
                         <TextBox
                             Grid.Row="0"
                             Grid.Column="1"
-                            Background="LightGray"
-                            IsReadOnly="True"
-                            Text="{Binding AirTransport.SumCount, Mode=OneWay}" />
+                            Text="{Binding SeaTransport.Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBox
                             Grid.Row="1"
                             Grid.Column="1"
-                            Background="LightGray"
-                            IsReadOnly="True"
-                            Text="{Binding AirTransport.SumWeight, Mode=OneWay}" />
+                            Text="{Binding SeaTransport.Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBox
                             Grid.Row="2"
                             Grid.Column="1"
-                            Background="LightGray"
-                            IsReadOnly="True"
-                            Text="{Binding AirTransport.SumVolume, Mode=OneWay}" />
+                            Text="{Binding SeaTransport.Volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                         <Border Grid.Row="3" Grid.Column="1">
-                            <TextBox BorderThickness="0" Text="{Binding AirTransport.TagEx}" />
+                            <TextBox BorderThickness="0" Text="{Binding SeaTransport.Tag}" />
                         </Border>
 
                     </Grid>
@@ -210,7 +175,7 @@
                 <Grid Grid.Row="1">
                     <DataGrid
                         CellStyle="{StaticResource GeneralDataGridCellStyle}"
-                        ItemsSource="{Binding AirTransportDetails}"
+                        ItemsSource="{Binding SeaTransportDetails}"
                         RowStyle="{StaticResource GeneralDataGridRowStyle}"
                         Style="{StaticResource GeneralDataGridStyle}">
                         <DataGrid.Columns>
@@ -230,18 +195,18 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
 
-                            <DataGridTemplateColumn Width="150" Header="收貨件數">
+                            <DataGridTemplateColumn Width="200" Header="廠家">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding CountEx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Productor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
 
-                            <DataGridTemplateColumn Width="80" Header="重量">
+                            <DataGridTemplateColumn Width="150" Header="收貨件數">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding WeightEx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -249,31 +214,7 @@
                             <DataGridTemplateColumn Width="80" Header="體積">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding VolumeEx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-
-                            <DataGridTemplateColumn Width="80" Header="長">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding LengthEx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-
-                            <DataGridTemplateColumn Width="80" Header="寬">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding WidthEx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-
-                            <DataGridTemplateColumn Width="80" Header="高">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding HeightEx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -282,7 +223,7 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button
-                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:EditAirTransportWindow}, Path=DataContext.DeleteDetailCommand}"
+                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:EditSeaTransportWindow}, Path=DataContext.DeleteDetailCommand}"
                                             CommandParameter="{Binding}"
                                             Content="刪除"
                                             Style="{StaticResource DataGridDeleteButtonStyle}" />
@@ -292,7 +233,6 @@
 
                         </DataGrid.Columns>
                     </DataGrid>
-
                 </Grid>
 
                 <!--  操作按鈕  -->
@@ -322,7 +262,7 @@
                             Width="100"
                             Height="30"
                             Command="{Binding SaveCommand}"
-                            CommandParameter="{Binding ElementName=editAirTransportWindow}"
+                            CommandParameter="{Binding ElementName=editSeaTransportWindow}"
                             Content="儲存"
                             Style="{StaticResource ButtonStyle}" />
                         <Button
@@ -330,7 +270,7 @@
                             Width="100"
                             Height="30"
                             Command="{Binding CloseCommand}"
-                            CommandParameter="{Binding ElementName=editAirTransportWindow}"
+                            CommandParameter="{Binding ElementName=editSeaTransportWindow}"
                             Content="關閉"
                             Style="{StaticResource ButtonStyle}" />
                     </StackPanel>

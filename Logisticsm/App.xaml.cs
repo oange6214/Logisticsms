@@ -1,5 +1,7 @@
 ﻿using Logisticsm.Repository.Providers;
 using Logisticsm.ViewModels;
+using Logisticsm.ViewModels.AirTransports;
+using Logisticsm.ViewModels.SeaTransports;
 using Logisticsm.Views;
 using Logisticsm.Windows;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,19 +39,25 @@ public partial class App : Application
 	{
 		services.AddSingleton<MainWindow>();
 		services.AddSingleton<LoginWindow>();
-		services.AddSingleton<AirTransportView>();
-		services.AddSingleton<CustomerView>();
+        services.AddSingleton<CustomerView>();
+        services.AddSingleton<AirTransportView>();
 		services.AddTransient<AddAirTransportWindow>();
 		services.AddTransient<EditAirTransportWindow>();
+        services.AddSingleton<SeaTransportView>();
+        //services.AddTransient<AddSeaTransportWindow>();
+        //services.AddTransient<EditSeaTransportWindow>();
     }
 
 	private void ViewModelServices(HostBuilderContext hostBuilderContext, IServiceCollection services)
 	{
 		services.AddSingleton<MainViewModel>();
 		services.AddSingleton<LoginViewModel>();
-		services.AddSingleton<AirTransportViewModel>();
-		services.AddSingleton<CustomerViewModel>();
+        services.AddSingleton<CustomerViewModel>();
+        services.AddSingleton<AirTransportViewModel>();
         services.AddTransient<AddAirTransportViewModel>(); 
 		services.AddTransient<EditAirTransportViewModel>();
+        services.AddSingleton<SeaTransportViewModel>();
+        services.AddTransient<AddSeaTransportViewModel>();
+        services.AddTransient<EditSeaTransportViewModel>();
     }
 }

@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Logisticsm.Repository.Entities;
+using Logisticsm.ViewModels.AirTransports;
+using Logisticsm.ViewModels.SeaTransports;
 using Logisticsm.Views;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
@@ -135,6 +137,9 @@ namespace Logisticsm.ViewModels
                 case "CustomerView":
                     CurrentPage = App.ServiceProvider.GetRequiredService<CustomerView>();
                     break;
+                case "SeaTransportView":
+                    CurrentPage = App.ServiceProvider.GetRequiredService<SeaTransportView>();
+                    break;
                 default:
                     break;
             }
@@ -159,6 +164,11 @@ namespace Logisticsm.ViewModels
                     if (currentPage is not CustomerView) return;
                     if (currentPage.DataContext is not CustomerViewModel customerViewModel) return;
                     customerViewModel.Save();
+                    break;
+                case "SeaTransportView":
+                    if (currentPage is not SeaTransportView) return;
+                    if (currentPage.DataContext is not SeaTransportViewModel seaTransportViewModel) return;
+                    seaTransportViewModel.Save();
                     break;
                 default:
                     break;

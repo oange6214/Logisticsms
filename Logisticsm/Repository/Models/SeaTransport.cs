@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Logisticsm.Repository.Entities
 {
-    public partial class AirTransport : ObservableObject
+    public partial class SeaTransport : ObservableObject
     {
         private int _sumCount = 0;
         [NotMapped]
@@ -24,6 +24,7 @@ namespace Logisticsm.Repository.Entities
             set
             {
                 SetProperty(ref _sumWeight, value);
+                Weight = value;
             }
         }
 
@@ -35,17 +36,7 @@ namespace Logisticsm.Repository.Entities
             set
             {
                 SetProperty(ref _sumVolume, value);
-            }
-        }
-
-        private double _sumDensity = 0;
-        [NotMapped]
-        public double SumDensity
-        {
-            get => _sumDensity;
-            set
-            {
-                SetProperty(ref _sumDensity, value);
+                Volume = value;
             }
         }
 
@@ -57,7 +48,7 @@ namespace Logisticsm.Repository.Entities
             set
             {
                 SetProperty(ref _tagEx, value);
-                Tag = _tagEx;
+                Tag = value;
             }
         }
 
@@ -69,7 +60,7 @@ namespace Logisticsm.Repository.Entities
             set
             {
                 SetProperty(ref _sourcePlaceEx, value);
-                SourcePlace = _sourcePlaceEx;
+                SourcePlace = value;
             }
         }
 
@@ -81,25 +72,18 @@ namespace Logisticsm.Repository.Entities
             set
             {
                 SetProperty(ref _targetPlaceEx, value);
-                TargetPlace = _targetPlaceEx;
+                TargetPlace = value;
             }
         }
 
         public void UpdateProperties()
         {
-            if (AirTransportDetails != null)
-            {
-                SumCount = (int)AirTransportDetails.Sum(t => t.Count);
-                SumWeight = (int)AirTransportDetails.Sum(t => t.Weight);
-                SumVolume = (int)AirTransportDetails.Sum(t => t.Volume);
-                SumDensity = SumWeight / SumVolume;
-
-                TagEx = string.Empty;
-                foreach (var item in AirTransportDetails)
-                {
-                    TagEx += $"{item.Length} * {item.Width} * {item.Height} / {item.Count} \r";
-                }
-            }
+            //if (SeaTransportDetails != null)
+            //{
+            //    SumCount = (int)SeaTransportDetails.Sum(t => t.Count);
+            //    SumWeight = (int)SeaTransportDetails.Sum(t => t.Weight);
+            //    SumVolume = (int)SeaTransportDetails.Sum(t => t.Volume);
+            //}
         }
     }
 }

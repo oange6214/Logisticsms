@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Logisticsm.Views
+namespace Logisticsm.Windows
 {
     public partial class EditAirTransportWindow : Window
     {

@@ -2,9 +2,9 @@
 
 namespace Logisticsm.Windows
 {
-    public partial class AddAirTransportWindow : Window
+    public partial class AddSeaTransportWindow : Window
     {
-        public AddAirTransportWindow()
+        public AddSeaTransportWindow()
         {
             InitializeComponent();
 

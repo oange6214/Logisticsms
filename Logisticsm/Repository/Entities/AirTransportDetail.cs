@@ -49,5 +49,5 @@ public partial class AirTransportDetail
 
     [ForeignKey("AirTransportId")]
     [InverseProperty("AirTransportDetails")]
-    public virtual AirTransport AirTransport { get; set; } = null!;
+    public virtual AirTransport? AirTransport { get; set; }
 }

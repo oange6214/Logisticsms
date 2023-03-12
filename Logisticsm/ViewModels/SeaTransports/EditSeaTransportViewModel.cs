@@ -2,8 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using Logisticsm.Repository.Entities;
 using Logisticsm.Repository.Providers;
-using Logisticsm.Windows;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,15 +10,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Logisticsm.ViewModels
+namespace Logisticsm.ViewModels.SeaTransports
 {
-    public class EditAirTransportViewModel : ObservableObject
+    public class EditSeaTransportViewModel : ObservableObject
     {
         #region Fields
 
         private CustomerProvider _customerProvider = new();
-        private AirTransportProvider _airTransportProvider = new();
-        private AirTransportDetailProvider _airTransportDetailProvider = new();
+        private SeaTransportProvider _seaTransportProvider = new();
+        private SeaTransportDetailProvider _seaTransportDetailProvider = new();
 
         #endregion
 
@@ -52,34 +50,33 @@ namespace Logisticsm.ViewModels
             }
         }
 
-        private AirTransport _airTransport = new() { SendDate = DateTime.Now };
+        private SeaTransport _seaTransport = new() { SendDate = DateTime.Now };
         /// <summary>
         /// 空運單號
         /// </summary>
-        public AirTransport AirTransport
+        public SeaTransport SeaTransport
         {
-            get => _airTransport;
-            set                          
+            get => _seaTransport;
+            set
             {
-                SetProperty(ref _airTransport, value);
+                SetProperty(ref _seaTransport, value);
             }
         }
 
-        private ObservableCollection<AirTransportDetail> _airTransportDetails = new();
+        private ObservableCollection<SeaTransportDetail> _seaTransportDetails = new();
         /// <summary>
         /// 全部詳細空運單號
         /// </summary>
-        public ObservableCollection<AirTransportDetail> AirTransportDetails
+        public ObservableCollection<SeaTransportDetail> SeaTransportDetails
         {
-            get => _airTransportDetails;
+            get => _seaTransportDetails;
             set
             {
-                SetProperty(ref _airTransportDetails, value);
+                SetProperty(ref _seaTransportDetails, value);
             }
         }
-         
-        #endregion
 
+        #endregion
 
         #region Commands
 
@@ -93,7 +90,7 @@ namespace Logisticsm.ViewModels
                 return new RelayCommand(() =>
                 {
                     // 載入當前單號
-                    AirTransport = _airTransportProvider.GetItemById(AirTransport.Id);
+                    SeaTransport = _seaTransportProvider.GetItemById(SeaTransport.Id);
 
                     // 載入全部客戶
                     var customers = _customerProvider.GetAll();
@@ -104,19 +101,19 @@ namespace Logisticsm.ViewModels
                     }
 
                     // 當前客戶
-                    Customer = Customers.FirstOrDefault(t => t.Id == AirTransport.CustomerId);
+                    Customer = Customers.FirstOrDefault(t => t.Id == SeaTransport.CustomerId);
 
                     // 載入當前單號的詳細記錄
-                    var airTransportDetails = _airTransportDetailProvider.GetAll().FindAll(t => t.AirTransportId == AirTransport.Id);
-                    AirTransportDetails.Clear();
-                    foreach(var item in airTransportDetails)
+                    var SeaTransportDetails = _seaTransportDetailProvider.GetAll().FindAll(t => t.SeaTransportId == SeaTransport.Id);
+                    SeaTransportDetails.Clear();
+                    foreach (var item in SeaTransportDetails)
                     {
-                        AirTransportDetails.Add(item);
-                        item.AirTransport = AirTransport;
+                        SeaTransportDetails.Add(item);
+                        //item.SeaTransport = SeaTransport;
                     }
 
-                    AirTransport.AirTransportDetails = AirTransportDetails;
-                    AirTransport.UpdateProperties();
+                    //SeaTransport.SeaTransportDetails = SeaTransportDetails;
+                    SeaTransport.UpdateProperties();
                 });
             }
         }
@@ -124,24 +121,24 @@ namespace Logisticsm.ViewModels
         /// <summary>
         /// 增加空運詳細記錄
         /// </summary>
-        public RelayCommand<AirTransportDetail> AddDetailCommand
+        public RelayCommand<SeaTransportDetail> AddDetailCommand
         {
             get
             {
-                return new RelayCommand<AirTransportDetail>((e) =>
+                return new RelayCommand<SeaTransportDetail>((e) =>
                 {
-                    AirTransportDetail entity = new()
+                    SeaTransportDetail entity = new()
                     {
                         MemberId = AppData.Instance.CurrentUser.Id,
-                        AirTransportId = AirTransport.Id,
+                        SeaTransportId = SeaTransport.Id,
                         ReceiveDate = DateTime.Now,
-                        AirTransport = AirTransport
+                        //SeaTransport = SeaTransport
                     };
 
-                    var count = _airTransportDetailProvider.Insert(entity);
+                    var count = _seaTransportDetailProvider.Insert(entity);
                     if (count > 0)
                     {
-                        AirTransportDetails.Add(entity);
+                        SeaTransportDetails.Add(entity);
                     }
                 });
             }
@@ -157,10 +154,10 @@ namespace Logisticsm.ViewModels
                 return new RelayCommand<Window>((window) =>
                 {
                     int count = 0;
-                    count += _airTransportProvider.Save();
-                    count += _airTransportDetailProvider.Save();
+                    count += _seaTransportProvider.Save();
+                    count += _seaTransportDetailProvider.Save();
 
-                    //AirTransport.UpdateProperties();
+                    //SeaTransport.UpdateProperties();
 
                     string message = count > 0 ? "操作成功" : "操作失敗";
 
@@ -180,8 +177,8 @@ namespace Logisticsm.ViewModels
             {
                 return new RelayCommand<Window>((window) =>
                 {
-                    _airTransportProvider.Save();
-                    _airTransportDetailProvider.Save();
+                    _seaTransportProvider.Save();
+                    _seaTransportDetailProvider.Save();
                     window?.Close();
                 });
             }
@@ -190,22 +187,22 @@ namespace Logisticsm.ViewModels
         /// <summary>
         /// 刪除一個項目
         /// </summary>
-        public RelayCommand<AirTransportDetail> DeleteDetailCommand
+        public RelayCommand<SeaTransportDetail> DeleteDetailCommand
         {
             get
             {
-                return new RelayCommand<AirTransportDetail>((entity) =>
+                return new RelayCommand<SeaTransportDetail>((entity) =>
                 {
                     if (entity == null) return;
 
                     if (MessageBox.Show($"Delete this [ {entity.Id} ]?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        var count = _airTransportDetailProvider.Delete(entity);
+                        var count = _seaTransportDetailProvider.Delete(entity);
                         if (count > 0)
                         {
-                            AirTransportDetails.Remove(entity);
+                            SeaTransportDetails.Remove(entity);
                         }
-                        AirTransport.UpdateProperties();
+                        SeaTransport.UpdateProperties();
                     }
                 });
             }
@@ -215,11 +212,11 @@ namespace Logisticsm.ViewModels
 
         #region Public Methods
 
-        public void SetProvider(CustomerProvider customerProvider, AirTransportProvider airTransportProvider, AirTransportDetailProvider airTransportDetailProvider)
+        public void SetProvider(CustomerProvider customerProvider, SeaTransportProvider SeaTransportProvider, SeaTransportDetailProvider SeaTransportDetailProvider)
         {
             _customerProvider = customerProvider;
-            _airTransportProvider = airTransportProvider;
-            _airTransportDetailProvider = airTransportDetailProvider;
+            _seaTransportProvider = SeaTransportProvider;
+            _seaTransportDetailProvider = SeaTransportDetailProvider;
         }
 
         #endregion

@@ -20,22 +20,26 @@ public partial class SeaTransportDetail
     public int MemberId { get; set; }
 
     [Column("receive_date", TypeName = "datetime")]
-    public DateTime ReceiveDate { get; set; }
+    public DateTime? ReceiveDate { get; set; }
 
     [Column("productor")]
     [StringLength(64)]
-    public string Productor { get; set; } = null!;
+    public string? Productor { get; set; }
 
     [Column("count")]
-    public int Count { get; set; }
+    public int? Count { get; set; }
 
     [Column("volume")]
-    public double Volume { get; set; }
+    public double? Volume { get; set; }
 
     [Column("insert_date", TypeName = "datetime")]
     public DateTime? InsertDate { get; set; }
 
     [Column("tag")]
-    [StringLength(512)]
+    [StringLength(128)]
     public string? Tag { get; set; }
+
+    [ForeignKey("SeaTransportId")]
+    [InverseProperty("SeaTransportDetails")]
+    public virtual SeaTransport SeaTransport { get; set; } = null!;
 }
