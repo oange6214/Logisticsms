@@ -4,12 +4,7 @@ using Logisticsm.Repository.Entities;
 using Logisticsm.Repository.Providers;
 using Logisticsm.Windows;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Logisticsm.ViewModels.SeaTransports
@@ -130,7 +125,7 @@ namespace Logisticsm.ViewModels.SeaTransports
                 {
                     App.ServiceProvider.GetRequiredService<MainViewModel>().MamkerVisible = Visibility.Visible;
 
-                    EditSeaTransportWindow editSeaTransportWindow = new();
+                    EditSeaTransportWindow editSeaTransportWindow = new(_customerProvider, _seaTransportProvider, _seaTransportDetailProvider);
                     (editSeaTransportWindow.DataContext as EditSeaTransportViewModel).SeaTransport = SeaTransport;
                     (editSeaTransportWindow.DataContext as EditSeaTransportViewModel).SetProvider(_customerProvider, _seaTransportProvider, _seaTransportDetailProvider);
                     editSeaTransportWindow.ShowDialog();
@@ -183,12 +178,12 @@ namespace Logisticsm.ViewModels.SeaTransports
                         item.SeaTransportDetails.Clear();
                         SeaTransports.Add(item);
 
-                        var children = SeaTransportDetails.Where(t => t.SeaTransportId == item.Id).ToList();
+                        List<SeaTransportDetail> children = SeaTransportDetails.Where(t => t.SeaTransportId == item.Id).ToList();
                         children.ForEach(child => item.SeaTransportDetails.Add(child));
 
-                        item.SumCount = (int)item.SeaTransportDetails.Sum(t => t.Count);
+                        //item.SumCount = (int)item.SeaTransportDetails.Sum(t => t.Count);
                         //item.SumWeight = (int)item.SeaTransportDetails.Sum(t => t.Weight);
-                        item.SumVolume = (int)item.SeaTransportDetails.Sum(t => t.Volume);
+                        //item.SumVolume = (int)item.SeaTransportDetails.Sum(t => t.Volume);
                         item.Customer = Customers.FirstOrDefault(t => t.Id == item.CustomerId);
                     }
 

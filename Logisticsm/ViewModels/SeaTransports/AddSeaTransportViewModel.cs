@@ -3,12 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Logisticsm.Repository.Entities;
 using Logisticsm.Repository.Providers;
 using Logisticsm.Windows;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Logisticsm.ViewModels.SeaTransports
@@ -192,16 +187,16 @@ namespace Logisticsm.ViewModels.SeaTransports
         {
             get
             {
-                return new RelayCommand<SeaTransportDetail>((airTransportDetail) =>
+                return new RelayCommand<SeaTransportDetail>((seaTransportDetail) =>
                 {
-                    if (airTransportDetail == null) return;
+                    if (seaTransportDetail == null) return;
 
-                    if (MessageBox.Show($"Delete this [ {airTransportDetail.Id} ]?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (MessageBox.Show($"Delete this [ {seaTransportDetail.Id} ]?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        var count = _seaTransportDetailProvider.Delete(airTransportDetail);
+                        var count = _seaTransportDetailProvider.Delete(seaTransportDetail);
                         if (count > 0)
                         {
-                            SeaTransportDetails.Remove(airTransportDetail);
+                            SeaTransportDetails.Remove(seaTransportDetail);
                         }
                         SeaTransport.UpdateProperties();
                     }

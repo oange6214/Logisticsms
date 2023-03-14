@@ -2,12 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Logisticsm.Repository.Entities;
 using Logisticsm.Repository.Providers;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Logisticsm.ViewModels.SeaTransports
@@ -16,9 +11,9 @@ namespace Logisticsm.ViewModels.SeaTransports
     {
         #region Fields
 
-        private CustomerProvider _customerProvider = new();
-        private SeaTransportProvider _seaTransportProvider = new();
-        private SeaTransportDetailProvider _seaTransportDetailProvider = new();
+        public CustomerProvider _customerProvider = null;
+        public SeaTransportProvider _seaTransportProvider = null;
+        public SeaTransportDetailProvider _seaTransportDetailProvider = null;
 
         #endregion
 
@@ -93,27 +88,23 @@ namespace Logisticsm.ViewModels.SeaTransports
                     SeaTransport = _seaTransportProvider.GetItemById(SeaTransport.Id);
 
                     // 載入全部客戶
-                    var customers = _customerProvider.GetAll();
                     Customers.Clear();
-                    foreach (var item in customers)
-                    {
-                        Customers.Add(item);
-                    }
+                    _customerProvider.GetAll().ForEach(cust => Customers.Add(cust));
 
                     // 當前客戶
                     Customer = Customers.FirstOrDefault(t => t.Id == SeaTransport.CustomerId);
 
                     // 載入當前單號的詳細記錄
-                    var SeaTransportDetails = _seaTransportDetailProvider.GetAll().FindAll(t => t.SeaTransportId == SeaTransport.Id);
+                    List<SeaTransportDetail> seaTransportDetails = _seaTransportDetailProvider.GetAll().FindAll(t => t.SeaTransportId == SeaTransport.Id);
                     SeaTransportDetails.Clear();
-                    foreach (var item in SeaTransportDetails)
+                    foreach (var item in seaTransportDetails)
                     {
                         SeaTransportDetails.Add(item);
-                        //item.SeaTransport = SeaTransport;
+                        item.SeaTransport = SeaTransport;
                     }
 
-                    //SeaTransport.SeaTransportDetails = SeaTransportDetails;
-                    SeaTransport.UpdateProperties();
+                    SeaTransport.SeaTransportDetails = SeaTransportDetails;
+                    //SeaTransport.UpdateProperties();
                 });
             }
         }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Logisticsm.Repository.Entities;
+﻿using Logisticsm.Repository.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logisticsm.Repository.Data;
@@ -34,7 +32,8 @@ public partial class OrderDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=desktop-tioth5g\\sqlexpress;Database=OrderDB;User Id=sa;Password=123;TrustServerCertificate=True");
+        optionsBuilder
+            .UseSqlServer("Server=.\\sqlexpress;Database=OrderDB;User Id=sa;Password=123;TrustServerCertificate=True");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

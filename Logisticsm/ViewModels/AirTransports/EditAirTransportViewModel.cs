@@ -11,9 +11,9 @@ namespace Logisticsm.ViewModels.AirTransports
     {
         #region Fields
 
-        private CustomerProvider _customerProvider = new();
-        private AirTransportProvider _airTransportProvider = new();
-        private AirTransportDetailProvider _airTransportDetailProvider = new();
+        public CustomerProvider _customerProvider = null;
+        public AirTransportProvider _airTransportProvider = null;
+        public AirTransportDetailProvider _airTransportDetailProvider = null;
 
         #endregion
 

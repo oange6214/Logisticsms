@@ -108,7 +108,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Width="150" Header="件數">
+                <DataGridTemplateColumn Width="100" Header="件數">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Count}" />
@@ -116,7 +116,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Width="150" Header="體積">
+                <DataGridTemplateColumn Width="100" Header="體積">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Volume}" />
@@ -124,7 +124,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Width="150" Header="重量">
+                <DataGridTemplateColumn Width="100" Header="重量">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Weight}" />

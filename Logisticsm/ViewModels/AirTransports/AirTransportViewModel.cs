@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using Logisticsm.Repository.Entities;
 using Logisticsm.Repository.Providers;
-using Logisticsm.Views;
 using Logisticsm.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
@@ -126,7 +125,7 @@ namespace Logisticsm.ViewModels.AirTransports
                 {
                     App.ServiceProvider.GetRequiredService<MainViewModel>().MamkerVisible = Visibility.Visible;
 
-                    EditAirTransportWindow editAirTransportWindow = new();
+                    EditAirTransportWindow editAirTransportWindow = new(_customerProvider, _airTransportProvider, _airTransportDetailProvider);
                     (editAirTransportWindow.DataContext as EditAirTransportViewModel).AirTransport = AirTransport;
                     (editAirTransportWindow.DataContext as EditAirTransportViewModel).SetProvider(_customerProvider, _airTransportProvider, _airTransportDetailProvider);
                     editAirTransportWindow.ShowDialog();
