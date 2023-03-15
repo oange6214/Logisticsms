@@ -1,9 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Logisticsm.Repository.Entities;
 
 [Table("SeaTransport")]
+[Index("CustomerId", Name = "IX_SeaTransport_customer_id")]
 public partial class SeaTransport
 {
     [Key]
@@ -14,7 +18,7 @@ public partial class SeaTransport
     public int MemberId { get; set; }
 
     [Column("customer_id")]
-    public int? CustomerId { get; set; }
+    public int CustomerId { get; set; }
 
     [Column("send_date", TypeName = "datetime")]
     public DateTime? SendDate { get; set; }

@@ -11,7 +11,7 @@ namespace Logisticsm.Windows
             InitializeComponent();
 
             var vm = DataContext as EditAirTransportViewModel;
-            if (vm == null)
+            if (vm != null)
             {
                 vm._customerProvider = customerProvider;
                 vm._airTransportProvider = airTransportProvider;

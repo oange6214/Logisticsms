@@ -109,7 +109,7 @@ namespace Logisticsm.ViewModels.SeaTransports
                     window.firstGrid.Visibility = Visibility.Collapsed;
                     window.secondGrid.Visibility = Visibility.Visible;
 
-                    SeaTransport.CustomerId = _customers.FirstOrDefault(t => t.Name == Customer.Name)?.Id;
+                    SeaTransport.CustomerId = _customers.FirstOrDefault(t => t.Name == Customer.Name).Id;
                     SeaTransport.MemberId = AppData.Instance.CurrentUser.Id;
                     _seaTransportProvider.Insert(SeaTransport);
                 });

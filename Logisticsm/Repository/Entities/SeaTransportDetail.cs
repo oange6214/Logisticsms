@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Logisticsm.Repository.Entities;
 
 [Table("SeaTransportDetail")]
+[Index("SeaTransportId", Name = "IX_SeaTransportDetail_sea_transport_id")]
 public partial class SeaTransportDetail
 {
     [Key]

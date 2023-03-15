@@ -12,7 +12,7 @@ namespace Logisticsm.Windows
 
             var vm = DataContext as EditSeaTransportViewModel;
 
-            if (vm == null)
+            if (vm != null)
             {
                 vm._customerProvider = customerProvider;
                 vm._seaTransportProvider = seaTransportProvider;
