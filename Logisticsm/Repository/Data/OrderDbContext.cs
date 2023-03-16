@@ -33,9 +33,8 @@ public partial class OrderDbContext : DbContext
     public virtual DbSet<SeaTransportDetail> SeaTransportDetails { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer("Server=.\\sqlexpress;Database=OrderDB;User Id=sa;Password=123;TrustServerCertificate=True");
-    }
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=.\\sqlexpress;Database=OrderDB;User Id=sa;Password=123;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -60,14 +59,20 @@ public partial class OrderDbContext : DbContext
 
         modelBuilder.Entity<ExpressTransport>(entity =>
         {
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.InsertDate).HasDefaultValueSql("(getdate())");
+
+            entity.HasOne(d => d.Customer).WithMany(p => p.ExpressTransports)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ExpressTransport_Customer");
         });
 
         modelBuilder.Entity<ExpressTransportDetail>(entity =>
         {
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.InsertDate).HasDefaultValueSql("(getdate())");
+
+            entity.HasOne(d => d.ExpressTransport).WithMany(p => p.ExpressTransportDetails)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ExpressTransportDetail_ExpressTransport");
         });
 
         modelBuilder.Entity<Member>(entity =>

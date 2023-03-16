@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Logisticsm.Repository.Entities;
 
-[Keyless]
 [Table("ExpressTransport")]
 public partial class ExpressTransport
 {
+    [Key]
     [Column("id")]
     public int Id { get; set; }
 
@@ -59,4 +59,11 @@ public partial class ExpressTransport
     [Column("tag")]
     [StringLength(512)]
     public string? Tag { get; set; }
+
+    [ForeignKey("CustomerId")]
+    [InverseProperty("ExpressTransports")]
+    public virtual Customer Customer { get; set; } = null!;
+
+    [InverseProperty("ExpressTransport")]
+    public virtual ICollection<ExpressTransportDetail> ExpressTransportDetails { get; set; } = new List<ExpressTransportDetail>();
 }

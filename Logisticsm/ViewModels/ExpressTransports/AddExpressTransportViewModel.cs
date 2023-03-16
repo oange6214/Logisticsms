@@ -6,15 +6,16 @@ using Logisticsm.Windows;
 using System.Collections.ObjectModel;
 using System.Windows;
 
-namespace Logisticsm.ViewModels.SeaTransports
+
+namespace Logisticsm.ViewModels.ExpressTransports
 {
-    public class AddSeaTransportViewModel : ObservableObject
+    public class AddExpressTransportViewModel : ObservableObject
     {
         #region Fields
 
         private readonly CustomerProvider _customerProvider = new();
-        private readonly SeaTransportProvider _seaTransportProvider = new();
-        private readonly SeaTransportDetailProvider _seaTransportDetailProvider = new();
+        private readonly ExpressTransportProvider _expressTransportProvider = new();
+        private readonly ExpressTransportDetailProvider _expressTransportDetailProvider = new();
 
         #endregion
 
@@ -46,29 +47,29 @@ namespace Logisticsm.ViewModels.SeaTransports
             }
         }
 
-        private SeaTransport _seaTransport = new() { SendDate = DateTime.Now };
+        private ExpressTransport _expressTransport = new() { SendDate = DateTime.Now };
         /// <summary>
-        /// 海運單號
+        /// 快遞單號
         /// </summary>
-        public SeaTransport SeaTransport
+        public ExpressTransport ExpressTransport
         {
-            get => _seaTransport;
+            get => _expressTransport;
             set
             {
-                SetProperty(ref _seaTransport, value);
+                SetProperty(ref _expressTransport, value);
             }
         }
 
-        private ObservableCollection<SeaTransportDetail> _seaTransportDetails = new();
+        private ObservableCollection<ExpressTransportDetail> _expressTransportDetails = new();
         /// <summary>
-        /// 全部詳細海運單號
+        /// 全部詳細快遞單號
         /// </summary>
-        public ObservableCollection<SeaTransportDetail> SeaTransportDetails
+        public ObservableCollection<ExpressTransportDetail> ExpressTransportDetails
         {
-            get => _seaTransportDetails;
+            get => _expressTransportDetails;
             set
             {
-                SetProperty(ref _seaTransportDetails, value);
+                SetProperty(ref _expressTransportDetails, value);
             }
         }
 
@@ -88,36 +89,36 @@ namespace Logisticsm.ViewModels.SeaTransports
                     var customers = _customerProvider.GetAll();
                     Customers.Clear();
                     customers.ForEach(item => Customers.Add(item));
-                    SeaTransport.SeaTransportDetails = SeaTransportDetails;
+                    ExpressTransport.ExpressTransportDetails = ExpressTransportDetails;
                 });
             }
         }
 
         /// <summary>
-        /// 按下一步 插入 SeaTransport 物件到資料庫中
+        /// 按下一步 插入 ExpressTransport 物件到資料庫中
         /// </summary>
-        public RelayCommand<AddSeaTransportWindow> NextStepCommand
+        public RelayCommand<AddExpressTransportWindow> NextStepCommand
         {
             get
             {
-                return new RelayCommand<AddSeaTransportWindow>((window) =>
+                return new RelayCommand<AddExpressTransportWindow>((window) =>
                 {
                     if (Customer == null) return;
-                    if (string.IsNullOrEmpty(SeaTransport.TargetPlace)) return;
-                    if (SeaTransport?.SendDate == null) return;
+                    if (string.IsNullOrEmpty(ExpressTransport.TargetPlace)) return;
+                    if (ExpressTransport?.SendDate == null) return;
 
                     window.firstGrid.Visibility = Visibility.Collapsed;
                     window.secondGrid.Visibility = Visibility.Visible;
 
-                    SeaTransport.CustomerId = _customers.FirstOrDefault(t => t.Name == Customer.Name).Id;
-                    SeaTransport.MemberId = AppData.Instance.CurrentUser.Id;
-                    _seaTransportProvider.Insert(SeaTransport);
+                    ExpressTransport.CustomerId = _customers.FirstOrDefault(t => t.Name == Customer.Name).Id;
+                    ExpressTransport.MemberId = AppData.Instance.CurrentUser.Id;
+                    _expressTransportProvider.Insert(ExpressTransport);
                 });
             }
         }
 
         /// <summary>
-        /// 增加海運詳細記錄
+        /// 增加快遞詳細記錄
         /// </summary>
         public RelayCommand AddDetailCommand
         {
@@ -125,25 +126,25 @@ namespace Logisticsm.ViewModels.SeaTransports
             {
                 return new RelayCommand(() =>
                 {
-                    SeaTransportDetail entity = new()
+                    ExpressTransportDetail entity = new()
                     {
                         MemberId = AppData.Instance.CurrentUser.Id,
-                        SeaTransportId = SeaTransport.Id,
+                        ExpressTransportId = ExpressTransport.Id,
                         ReceiveDate = DateTime.Now,
-                        SeaTransport = SeaTransport
+                        ExpressTransport = ExpressTransport
                     };
 
-                    var count = _seaTransportDetailProvider.Insert(entity);
+                    var count = _expressTransportDetailProvider.Insert(entity);
                     if (count > 0)
                     {
-                        SeaTransportDetails.Add(entity);
+                        ExpressTransportDetails.Add(entity);
                     }
                 });
             }
         }
 
         /// <summary>
-        /// 儲存海運單號
+        /// 儲存快遞單號
         /// </summary>
         public RelayCommand<Window> SaveCommand
         {
@@ -152,8 +153,8 @@ namespace Logisticsm.ViewModels.SeaTransports
                 return new RelayCommand<Window>((window) =>
                 {
                     int count = 0;
-                    count += _seaTransportProvider.Save();
-                    count += _seaTransportDetailProvider.Save();
+                    count += _expressTransportProvider.Save();
+                    count += _expressTransportDetailProvider.Save();
 
                     string message = count >= 0 ? "操作成功" : "操作失敗";
 
@@ -165,7 +166,7 @@ namespace Logisticsm.ViewModels.SeaTransports
         }
 
         /// <summary>
-        /// 保存海運單號並退出
+        /// 保存快遞單號並退出
         /// </summary>
         public RelayCommand<Window> CloseCommand
         {
@@ -173,8 +174,8 @@ namespace Logisticsm.ViewModels.SeaTransports
             {
                 return new RelayCommand<Window>((window) =>
                 {
-                    _seaTransportProvider.Save();
-                    _seaTransportDetailProvider.Save();
+                    _expressTransportProvider.Save();
+                    _expressTransportDetailProvider.Save();
                     window?.Close();
                 });
             }
@@ -183,22 +184,22 @@ namespace Logisticsm.ViewModels.SeaTransports
         /// <summary>
         /// 刪除一個項目
         /// </summary>
-        public RelayCommand<SeaTransportDetail> DeleteDetailCommand
+        public RelayCommand<ExpressTransportDetail> DeleteDetailCommand
         {
             get
             {
-                return new RelayCommand<SeaTransportDetail>((seaTransportDetail) =>
+                return new RelayCommand<ExpressTransportDetail>((expressTransportDetail) =>
                 {
-                    if (seaTransportDetail == null) return;
+                    if (expressTransportDetail == null) return;
 
-                    if (MessageBox.Show($"Delete this [ {seaTransportDetail.Id} ]?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (MessageBox.Show($"Delete this [ {expressTransportDetail.Id} ]?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        var count = _seaTransportDetailProvider.Delete(seaTransportDetail);
+                        var count = _expressTransportDetailProvider.Delete(expressTransportDetail);
                         if (count > 0)
                         {
-                            SeaTransportDetails.Remove(seaTransportDetail);
+                            ExpressTransportDetails.Remove(expressTransportDetail);
                         }
-                        SeaTransport.UpdateProperties();
+                        ExpressTransport.UpdateProperties();
                     }
 
                 });

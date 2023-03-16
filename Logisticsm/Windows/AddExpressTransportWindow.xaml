@@ -1,5 +1,5 @@
 ﻿<Window
-    x:Class="Logisticsm.Windows.AddSeaTransportWindow"
+    x:Class="Logisticsm.Windows.AddExpressTransportWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="clr-namespace:Logisticsm.Converter"
@@ -7,13 +7,13 @@
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:Logisticsm.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Name="addSeaTransportWindow"
-    Title="新增海運單號"
+    x:Name="addExpressTransportWindow"
+    Title="新增快遞單號"
     Width="1000"
     Height="600"
     AllowsTransparency="True"
     Background="Transparent"
-    DataContext="{Binding Source={StaticResource Locator}, Path=AddSeaTransport}"
+    DataContext="{Binding Source={StaticResource Locator}, Path=AddExpressTransport}"
     WindowStartupLocation="CenterScreen"
     WindowState="Normal"
     WindowStyle="None"
@@ -277,22 +277,6 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Productor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-
-                            <DataGridTemplateColumn Width="150" Header="收貨件數">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Count, Converter={StaticResource NullToValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-
-                            <DataGridTemplateColumn Width="80" Header="體積">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Volume, Converter={StaticResource NullToValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

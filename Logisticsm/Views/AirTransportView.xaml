@@ -62,7 +62,10 @@
                 <DataGridTemplateColumn Width="150" Header="發貨時間">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding SendDate, StringFormat={}{0:yyyy-MM-dd}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                IsReadOnly="True"
+                                Style="{StaticResource GeneralTextBoxStyle}"
+                                Text="{Binding SendDate, StringFormat={}{0:yyyy-MM-dd}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -71,7 +74,10 @@
                 <DataGridTemplateColumn Width="150" Header="客戶">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Customer.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                IsReadOnly="True"
+                                Style="{StaticResource GeneralTextBoxStyle}"
+                                Text="{Binding Customer.Name}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -79,7 +85,10 @@
                 <DataGridTemplateColumn Width="150" Header="單號">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding OrderNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                IsReadOnly="True"
+                                Style="{StaticResource GeneralTextBoxStyle}"
+                                Text="{Binding OrderNumber}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -87,7 +96,10 @@
                 <DataGridTemplateColumn Width="150" Header="起運地">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding SourcePlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                IsReadOnly="True"
+                                Style="{StaticResource GeneralTextBoxStyle}"
+                                Text="{Binding SourcePlace}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -95,7 +107,10 @@
                 <DataGridTemplateColumn Width="150" Header="目的地">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding TargetPlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                IsReadOnly="True"
+                                Style="{StaticResource GeneralTextBoxStyle}"
+                                Text="{Binding TargetPlace}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -103,7 +118,10 @@
                 <DataGridTemplateColumn Width="150" Header="件數">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding SumCount}" />
+                            <TextBox
+                                IsReadOnly="True"
+                                Style="{StaticResource GeneralTextBoxStyle}"
+                                Text="{Binding SumCount}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -111,7 +129,10 @@
                 <DataGridTemplateColumn Width="150" Header="體積">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding SumVolume}" />
+                            <TextBox
+                                IsReadOnly="True"
+                                Style="{StaticResource GeneralTextBoxStyle}"
+                                Text="{Binding SumVolume}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -119,7 +140,10 @@
                 <DataGridTemplateColumn Width="150" Header="重量">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding SumWeight}" />
+                            <TextBox
+                                IsReadOnly="True"
+                                Style="{StaticResource GeneralTextBoxStyle}"
+                                Text="{Binding SumWeight}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -143,7 +167,10 @@
         </StackPanel>
 
         <!--  備註  -->
-        <TextBox Grid.Row="3" Text="{Binding AirTransport.Tag}" />
+        <TextBox
+            Grid.Row="3"
+            IsReadOnly="True"
+            Text="{Binding AirTransport.Tag}" />
 
     </Grid>
 

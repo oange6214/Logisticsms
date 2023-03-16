@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="Logisticsm.Views.SeaTransportView"
+    x:Class="Logisticsm.Views.ExpressTransportView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="550"
     d:DesignWidth="1000"
-    DataContext="{Binding Source={StaticResource Locator}, Path=SeaTransport}"
+    DataContext="{Binding Source={StaticResource Locator}, Path=ExpressTransport}"
     mc:Ignorable="d">
 
     <i:Interaction.Triggers>
@@ -39,16 +39,16 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 FontSize="20"
-                Text="海運單號管理" />
+                Text="快遞單號管理" />
         </StackPanel>
 
         <!--  表格內容  -->
         <DataGrid
             Grid.Row="1"
             CellStyle="{StaticResource GeneralDataGridCellStyle}"
-            ItemsSource="{Binding SeaTransports}"
+            ItemsSource="{Binding ExpressTransports}"
             RowStyle="{StaticResource GeneralDataGridRowStyle}"
-            SelectedItem="{Binding SeaTransport}"
+            SelectedItem="{Binding ExpressTransport}"
             Style="{StaticResource GeneralDataGridStyle}">
 
             <i:Interaction.Triggers>
@@ -62,10 +62,7 @@
                 <DataGridTemplateColumn Width="150" Header="發貨時間">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox
-                                IsReadOnly="True"
-                                Style="{StaticResource GeneralTextBoxStyle}"
-                                Text="{Binding SendDate, StringFormat={}{0:yyyy-MM-dd}}" />
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding SendDate, StringFormat={}{0:yyyy-MM-dd}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -73,10 +70,7 @@
                 <DataGridTemplateColumn Width="150" Header="客戶">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox
-                                IsReadOnly="True"
-                                Style="{StaticResource GeneralTextBoxStyle}"
-                                Text="{Binding Customer.Name}" />
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding Customer.Name}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -84,32 +78,26 @@
                 <DataGridTemplateColumn Width="150" Header="櫃型">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox
-                                IsReadOnly="True"
-                                Style="{StaticResource GeneralTextBoxStyle}"
-                                Text="{Binding BoxModel}" />
+                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding BoxModel}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Width="150" Header="櫃號">
+                <DataGridTemplateColumn Width="150" Header="單號">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox
-                                IsReadOnly="True"
-                                Style="{StaticResource GeneralTextBoxStyle}"
-                                Text="{Binding BoxNumber}" />
+                            <TextBlock Text="{Binding OrderNumber}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Width="150" Header="起運地">
+                <DataGridTemplateColumn Width="150" Header="渠道">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox
+                            <ComboBox
                                 IsReadOnly="True"
-                                Style="{StaticResource GeneralTextBoxStyle}"
-                                Text="{Binding SourcePlace}" />
+                                ItemsSource="{Binding Channels}"
+                                Text="{Binding Channel}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -167,11 +155,11 @@
             HorizontalAlignment="Left"
             Orientation="Horizontal">
             <Button
-                Command="{Binding InsertSeaTransportCommand}"
+                Command="{Binding InsertExpressTransportCommand}"
                 Content="新增單號"
                 Style="{StaticResource ButtonStyle}" />
             <Button
-                Command="{Binding InsertSeaTransportCommand}"
+                Command="{Binding InsertExpressTransportCommand}"
                 Content="刪除單號"
                 Style="{StaticResource ButtonStyle}" />
         </StackPanel>
@@ -180,8 +168,7 @@
         <TextBox
             Grid.Row="3"
             IsReadOnly="True"
-            Text="{Binding SeaTransport.Tag}" />
+            Text="{Binding ExpressTransport.Tag}" />
 
     </Grid>
-
 </UserControl>

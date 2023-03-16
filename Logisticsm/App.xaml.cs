@@ -1,6 +1,7 @@
 ﻿using Logisticsm.Repository.Providers;
 using Logisticsm.ViewModels;
 using Logisticsm.ViewModels.AirTransports;
+using Logisticsm.ViewModels.ExpressTransports;
 using Logisticsm.ViewModels.SeaTransports;
 using Logisticsm.Views;
 using Logisticsm.Windows;
@@ -44,9 +45,12 @@ public partial class App : Application
 		services.AddTransient<AddAirTransportWindow>();
 		services.AddTransient<EditAirTransportWindow>();
         services.AddSingleton<SeaTransportView>();
-        //services.AddTransient<AddSeaTransportWindow>();
-        //services.AddTransient<EditSeaTransportWindow>();
-    }
+		//services.AddTransient<AddSeaTransportWindow>();
+		//services.AddTransient<EditSeaTransportWindow>();
+		services.AddSingleton<ExpressTransportView>();
+		//services.AddTransient<AddExpressTransportWindow>();
+		//services.AddTransient<EditExpressTransportWindow>();
+	}
 
 	private void ViewModelServices(HostBuilderContext hostBuilderContext, IServiceCollection services)
 	{
@@ -59,5 +63,8 @@ public partial class App : Application
         services.AddSingleton<SeaTransportViewModel>();
         services.AddTransient<AddSeaTransportViewModel>();
         services.AddTransient<EditSeaTransportViewModel>();
-    }
+		services.AddSingleton<ExpressTransportViewModel>();
+		services.AddTransient<AddExpressTransportViewModel>();
+		services.AddTransient<EditExpressTransportViewModel>();
+	}
 }

@@ -115,6 +115,9 @@
                             Tag="Solid_Ship"
                             ToolTip="海運分頁" />
                         <RadioButton
+                            x:Name="ExpressTransportView"
+                            Command="{Binding MenuCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
                             Content="快遞分頁"
                             FontSize="16"
                             GroupName="menu"

@@ -37,7 +37,7 @@ namespace Logisticsm.ViewModels.SeaTransports
 
         private ObservableCollection<SeaTransport> _seaTransports = new();
         /// <summary>
-        /// 空運單號群
+        /// 海運單號群
         /// </summary>
         public ObservableCollection<SeaTransport> SeaTransports
         {
@@ -64,7 +64,7 @@ namespace Logisticsm.ViewModels.SeaTransports
 
         private SeaTransport _seaTransport = new();
         /// <summary>
-        /// DataGrid 空運單號
+        /// DataGrid 海運單號
         /// </summary>
         public SeaTransport SeaTransport
         {
@@ -95,7 +95,7 @@ namespace Logisticsm.ViewModels.SeaTransports
         }
 
         /// <summary>
-        /// 新增空運單號
+        /// 新增海運單號
         /// </summary>
         public RelayCommand InsertSeaTransportCommand
         {
@@ -115,7 +115,7 @@ namespace Logisticsm.ViewModels.SeaTransports
         }
 
         /// <summary>
-        /// 修改空運單號
+        /// 修改海運單號
         /// </summary>
         public RelayCommand DataGridMouseDoubleClickCommand
         {

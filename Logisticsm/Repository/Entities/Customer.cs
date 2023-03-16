@@ -46,5 +46,8 @@ public partial class Customer
     public virtual ICollection<AirTransport> AirTransports { get; } = new List<AirTransport>();
 
     [InverseProperty("Customer")]
+    public virtual ICollection<ExpressTransport> ExpressTransports { get; } = new List<ExpressTransport>();
+
+    [InverseProperty("Customer")]
     public virtual ICollection<SeaTransport> SeaTransports { get; } = new List<SeaTransport>();
 }

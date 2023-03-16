@@ -154,7 +154,7 @@ namespace Logisticsm.ViewModels.AirTransports
 
                     //AirTransport.UpdateProperties();
 
-                    string message = count > 0 ? "操作成功" : "操作失敗";
+                    string message = count >= 0 ? "操作成功" : "操作失敗";
 
                     MessageBox.Show(message);
 
