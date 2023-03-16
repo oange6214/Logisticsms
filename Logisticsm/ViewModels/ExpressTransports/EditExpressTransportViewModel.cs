@@ -198,6 +198,17 @@ namespace Logisticsm.ViewModels.ExpressTransports
             }
         }
 
+        public RelayCommand CustomerSelectionChangedCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    ExpressTransport.CustomerId = Customer.Id;
+                });
+            }
+        }
+
         #endregion
 
         #region Public Methods

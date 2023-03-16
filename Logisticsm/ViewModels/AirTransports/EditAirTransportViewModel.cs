@@ -203,6 +203,17 @@ namespace Logisticsm.ViewModels.AirTransports
             }
         }
 
+        public RelayCommand CustomerSelectionChangedCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    AirTransport.CustomerId = Customer.Id;
+                });
+            }
+        }
+
         #endregion
 
         #region Public Methods

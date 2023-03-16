@@ -93,28 +93,33 @@
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="0"
-                            Text="櫃型" />
+                            Text="單號" />
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="0"
-                            Text="櫃號" />
+                            Text="渠道" />
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="0"
-                            Text="起始地" />
+                            Text="起運地" />
                         <TextBlock
                             Grid.Row="3"
                             Grid.Column="0"
                             Text="目的地" />
+                        <TextBlock
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            Text="客戶選擇" />
 
                         <TextBox
                             Grid.Row="0"
                             Grid.Column="1"
-                            Text="{Binding ExpressTransport.BoxModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <TextBox
+                            Text="{Binding ExpressTransport.OrderNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <ComboBox
                             Grid.Row="1"
                             Grid.Column="1"
-                            Text="{Binding ExpressTransport.BoxNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            ItemsSource="{Binding ExpressTransport.Channels}"
+                            SelectedItem="{Binding ExpressTransport.Channel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBox
                             Grid.Row="2"
                             Grid.Column="1"
@@ -123,12 +128,29 @@
                             Grid.Row="3"
                             Grid.Column="1"
                             Text="{Binding ExpressTransport.TargetPlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <ComboBox
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            Height="25"
+                            MinWidth="200"
+                            Margin="3"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding Customers}"
+                            SelectedItem="{Binding Customer}">
+
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding CustomerSelectionChangedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
 
                     </Grid>
 
                     <!--  輸入項 右  -->
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="35" />
                             <RowDefinition Height="35" />
                             <RowDefinition Height="35" />
                             <RowDefinition Height="35" />
@@ -155,6 +177,10 @@
                             Grid.Row="3"
                             Grid.Column="0"
                             Text="備註" />
+                        <TextBlock
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            Text="出貨時間" />
 
                         <TextBox
                             Grid.Row="0"
@@ -170,8 +196,15 @@
                             Text="{Binding ExpressTransport.Volume, Converter={StaticResource NullToValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                         <Border Grid.Row="3" Grid.Column="1">
-                            <TextBox BorderThickness="0" Text="{Binding ExpressTransport.Tag}" />
+                            <TextBox Text="{Binding ExpressTransport.Tag}" />
                         </Border>
+
+                        <DatePicker
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            MinWidth="200"
+                            Margin="3"
+                            SelectedDate="{Binding ExpressTransport.SendDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     </Grid>
                 </Grid>

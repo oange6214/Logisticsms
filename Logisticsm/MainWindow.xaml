@@ -101,6 +101,7 @@
                             Content="空運分頁"
                             FontSize="16"
                             GroupName="menu"
+                            IsChecked="True"
                             Style="{StaticResource RadioButtonStyle}"
                             Tag="Solid_Plane"
                             ToolTip="空運分頁" />

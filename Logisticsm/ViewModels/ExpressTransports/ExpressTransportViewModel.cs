@@ -157,13 +157,30 @@ namespace Logisticsm.ViewModels.ExpressTransports
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
+                    //// 所有庫戶
+                    //Customers.Clear();
+                    //_customerProvider.GetAll().ForEach(c => Customers.Add(c));
+
+                    //// 所有詳情單號
+                    //ExpressTransportDetails.Clear();
+                    //_expressTransportDetailProvider.GetAll().ForEach(e => ExpressTransportDetails.Add(e));
+
                     // 所有庫戶
+                    var customers = _customerProvider.GetAll();
                     Customers.Clear();
-                    _customerProvider.GetAll().ForEach(c => Customers.Add(c));
+                    foreach (var customer in customers)
+                    {
+                        Customers.Add(customer);
+                    }
 
                     // 所有詳情單號
+                    var airTransportDetails = _expressTransportDetailProvider.GetAll();
                     ExpressTransportDetails.Clear();
-                    _expressTransportDetailProvider.GetAll().ForEach(e => ExpressTransportDetails.Add(e));
+                    foreach (var item in airTransportDetails)
+                    {
+                        ExpressTransportDetails.Add(item);
+                    }
+
 
                     // 所有單號
                     ExpressTransports.Clear();

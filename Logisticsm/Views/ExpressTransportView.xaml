@@ -75,14 +75,6 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Width="150" Header="櫃型">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox Style="{StaticResource GeneralTextBoxStyle}" Text="{Binding BoxModel}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-
                 <DataGridTemplateColumn Width="150" Header="單號">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -94,10 +86,21 @@
                 <DataGridTemplateColumn Width="150" Header="渠道">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox
+                            <TextBox
                                 IsReadOnly="True"
-                                ItemsSource="{Binding Channels}"
+                                Style="{StaticResource GeneralTextBoxStyle}"
                                 Text="{Binding Channel}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="150" Header="起運地">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox
+                                IsReadOnly="True"
+                                Style="{StaticResource GeneralTextBoxStyle}"
+                                Text="{Binding SourcePlace}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

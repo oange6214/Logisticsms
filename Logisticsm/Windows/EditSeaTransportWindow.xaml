@@ -101,7 +101,7 @@
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="0"
-                            Text="起始地" />
+                            Text="起運地" />
                         <TextBlock
                             Grid.Row="3"
                             Grid.Column="0"
@@ -129,6 +129,7 @@
                     <!--  輸入項 右  -->
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="35" />
                             <RowDefinition Height="35" />
                             <RowDefinition Height="35" />
                             <RowDefinition Height="35" />
@@ -170,7 +171,7 @@
                             Text="{Binding SeaTransport.Volume, Converter={StaticResource NullToValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                         <Border Grid.Row="3" Grid.Column="1">
-                            <TextBox BorderThickness="0" Text="{Binding SeaTransport.Tag}" />
+                            <TextBox Text="{Binding SeaTransport.Tag}" />
                         </Border>
 
                     </Grid>

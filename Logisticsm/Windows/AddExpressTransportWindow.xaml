@@ -38,7 +38,7 @@
 
             <Button
                 Command="{Binding CloseCommand}"
-                CommandParameter="{Binding ElementName=addSeaTransportWindow}"
+                CommandParameter="{Binding ElementName=addExpressTransportWindow}"
                 Style="{StaticResource CloseStyle}" />
 
             <!--  標題  -->
@@ -46,7 +46,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="18"
-                Text="新增海運單號" />
+                Text="新增快遞單號" />
 
             <!--  第一步  -->
             <Grid
@@ -98,13 +98,13 @@
                     Grid.Row="1"
                     Grid.Column="2"
                     VerticalAlignment="Center"
-                    Text="{Binding SeaTransport.TargetPlaceEx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding ExpressTransport.TargetPlaceEx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <DatePicker
                     Grid.Row="2"
                     Grid.Column="2"
                     VerticalAlignment="Center"
-                    SelectedDate="{Binding SeaTransport.SendDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    SelectedDate="{Binding ExpressTransport.SendDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Button
                     Grid.Row="3"
@@ -112,7 +112,7 @@
                     Grid.ColumnSpan="2"
                     Height="30"
                     Command="{Binding NextStepCommand}"
-                    CommandParameter="{Binding ElementName=addSeaTransportWindow}"
+                    CommandParameter="{Binding ElementName=addExpressTransportWindow}"
                     Content="下一步"
                     Style="{StaticResource ButtonStyle}" />
 
@@ -167,13 +167,11 @@
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="0"
-                            Text="櫃型" />
-
+                            Text="單號" />
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="0"
-                            Text="櫃號" />
-
+                            Text="渠道" />
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="0"
@@ -185,19 +183,21 @@
                         <TextBox
                             Grid.Row="0"
                             Grid.Column="1"
-                            Text="{Binding SeaTransport.BoxModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <TextBox
+                            Text="{Binding ExpressTransport.OrderNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <ComboBox
                             Grid.Row="1"
                             Grid.Column="1"
-                            Text="{Binding SeaTransport.BoxNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            ItemsSource="{Binding ExpressTransport.Channels}"
+                            SelectedItem="{Binding ExpressTransport.Channel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding ExpressTransport.Channel}" />
                         <TextBox
                             Grid.Row="2"
                             Grid.Column="1"
-                            Text="{Binding SeaTransport.SourcePlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding ExpressTransport.SourcePlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBox
                             Grid.Row="3"
                             Grid.Column="1"
-                            Text="{Binding SeaTransport.TargetPlaceEx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding ExpressTransport.TargetPlaceEx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
 
                     <!--  輸入項 右  -->
@@ -232,18 +232,18 @@
                         <TextBox
                             Grid.Row="0"
                             Grid.Column="1"
-                            Text="{Binding SeaTransport.Count, Converter={StaticResource NullToValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding ExpressTransport.Count, Converter={StaticResource NullToValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBox
                             Grid.Row="1"
                             Grid.Column="1"
-                            Text="{Binding SeaTransport.Weight, Converter={StaticResource NullToValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding ExpressTransport.Weight, Converter={StaticResource NullToValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBox
                             Grid.Row="2"
                             Grid.Column="1"
-                            Text="{Binding SeaTransport.Volume, Converter={StaticResource NullToValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding ExpressTransport.Volume, Converter={StaticResource NullToValueConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                         <Border Grid.Row="3" Grid.Column="1">
-                            <TextBox BorderThickness="0" Text="{Binding SeaTransport.Tag}" />
+                            <TextBox BorderThickness="0" Text="{Binding ExpressTransport.Tag}" />
                         </Border>
 
                     </Grid>
@@ -253,7 +253,7 @@
                 <Grid Grid.Row="1">
                     <DataGrid
                         CellStyle="{StaticResource GeneralDataGridCellStyle}"
-                        ItemsSource="{Binding SeaTransportDetails}"
+                        ItemsSource="{Binding ExpressTransportDetails}"
                         RowStyle="{StaticResource GeneralDataGridRowStyle}"
                         Style="{StaticResource GeneralDataGridStyle}">
                         <DataGrid.Columns>
@@ -285,7 +285,7 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button
-                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:AddSeaTransportWindow}, Path=DataContext.DeleteDetailCommand}"
+                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:AddExpressTransportWindow}, Path=DataContext.DeleteDetailCommand}"
                                             CommandParameter="{Binding}"
                                             Content="刪除"
                                             Style="{StaticResource DataGridDeleteButtonStyle}" />
@@ -325,7 +325,7 @@
                             Width="100"
                             Height="30"
                             Command="{Binding SaveCommand}"
-                            CommandParameter="{Binding ElementName=addSeaTransportWindow}"
+                            CommandParameter="{Binding ElementName=addExpressTransportWindow}"
                             Content="確定"
                             Style="{StaticResource ButtonStyle}" />
                         <Button
@@ -333,7 +333,7 @@
                             Width="100"
                             Height="30"
                             Command="{Binding CloseCommand}"
-                            CommandParameter="{Binding ElementName=addSeaTransportWindow}"
+                            CommandParameter="{Binding ElementName=addExpressTransportWindow}"
                             Content="關閉"
                             Style="{StaticResource ButtonStyle}" />
                     </StackPanel>

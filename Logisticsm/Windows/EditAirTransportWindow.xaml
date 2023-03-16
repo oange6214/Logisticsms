@@ -94,7 +94,7 @@
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="0"
-                            Text="起始地" />
+                            Text="起運地" />
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="0"
@@ -139,7 +139,13 @@
                             Margin="3"
                             DisplayMemberPath="Name"
                             ItemsSource="{Binding Customers}"
-                            SelectedItem="{Binding Customer}" />
+                            SelectedItem="{Binding Customer}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding CustomerSelectionChangedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
                         <DatePicker
                             Grid.Row="5"
                             Grid.Column="1"
@@ -148,6 +154,7 @@
                             Margin="3"
                             VerticalAlignment="Center"
                             SelectedDate="{Binding AirTransport.SendDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
                     </Grid>
 
                     <!--  輸入項 右  -->
