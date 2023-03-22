@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace Logisticsm.ViewModels.ExpressTransports
 {
-    public class ExpressTransportViewModel : ObservableObject
+    public class ExpressTransportViewModel : ObservableRecipient
     {
         #region Fields
 

@@ -2,6 +2,7 @@
     x:Class="Logisticsm.Views.AirTransportView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Logisticsm.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fa="http://schemas.fontawesome.com/icons/fonts"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
@@ -43,113 +44,123 @@
         </StackPanel>
 
         <!--  表格內容  -->
-        <DataGrid
-            Grid.Row="1"
-            CellStyle="{StaticResource GeneralDataGridCellStyle}"
-            ItemsSource="{Binding AirTransports}"
-            RowStyle="{StaticResource GeneralDataGridRowStyle}"
-            SelectedItem="{Binding AirTransport}"
-            Style="{StaticResource GeneralDataGridStyle}">
 
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding DataGridMouseDoubleClickCommand}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
 
-            <DataGrid.Columns>
+            <DataGrid
+                CellStyle="{StaticResource GeneralDataGridCellStyle}"
+                ItemsSource="{Binding AirTransports}"
+                RowStyle="{StaticResource GeneralDataGridRowStyle}"
+                SelectedItem="{Binding AirTransport}"
+                Style="{StaticResource GeneralDataGridStyle}">
 
-                <DataGridTemplateColumn Width="150" Header="發貨時間">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox
-                                IsReadOnly="True"
-                                Style="{StaticResource GeneralTextBoxStyle}"
-                                Text="{Binding SendDate, StringFormat={}{0:yyyy-MM-dd}}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding DataGridMouseDoubleClickCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+                <DataGrid.Columns>
+
+                    <DataGridTemplateColumn Width="150" Header="發貨時間">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox
+                                    IsReadOnly="True"
+                                    Style="{StaticResource GeneralTextBoxStyle}"
+                                    Text="{Binding SendDate, StringFormat={}{0:yyyy-MM-dd}}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
 
-                <DataGridTemplateColumn Width="150" Header="客戶">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox
-                                IsReadOnly="True"
-                                Style="{StaticResource GeneralTextBoxStyle}"
-                                Text="{Binding Customer.Name}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="150" Header="客戶">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox
+                                    IsReadOnly="True"
+                                    Style="{StaticResource GeneralTextBoxStyle}"
+                                    Text="{Binding Customer.Name}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Width="150" Header="單號">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox
-                                IsReadOnly="True"
-                                Style="{StaticResource GeneralTextBoxStyle}"
-                                Text="{Binding OrderNumber}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="150" Header="單號">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox
+                                    IsReadOnly="True"
+                                    Style="{StaticResource GeneralTextBoxStyle}"
+                                    Text="{Binding OrderNumber}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Width="150" Header="起運地">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox
-                                IsReadOnly="True"
-                                Style="{StaticResource GeneralTextBoxStyle}"
-                                Text="{Binding SourcePlace}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="150" Header="起運地">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox
+                                    IsReadOnly="True"
+                                    Style="{StaticResource GeneralTextBoxStyle}"
+                                    Text="{Binding SourcePlace}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Width="150" Header="目的地">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox
-                                IsReadOnly="True"
-                                Style="{StaticResource GeneralTextBoxStyle}"
-                                Text="{Binding TargetPlace}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="150" Header="目的地">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox
+                                    IsReadOnly="True"
+                                    Style="{StaticResource GeneralTextBoxStyle}"
+                                    Text="{Binding TargetPlace}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Width="150" Header="件數">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox
-                                IsReadOnly="True"
-                                Style="{StaticResource GeneralTextBoxStyle}"
-                                Text="{Binding SumCount}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="150" Header="件數">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox
+                                    IsReadOnly="True"
+                                    Style="{StaticResource GeneralTextBoxStyle}"
+                                    Text="{Binding SumCount}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Width="150" Header="體積">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox
-                                IsReadOnly="True"
-                                Style="{StaticResource GeneralTextBoxStyle}"
-                                Text="{Binding SumVolume}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="150" Header="體積">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox
+                                    IsReadOnly="True"
+                                    Style="{StaticResource GeneralTextBoxStyle}"
+                                    Text="{Binding SumVolume}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Width="150" Header="重量">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox
-                                IsReadOnly="True"
-                                Style="{StaticResource GeneralTextBoxStyle}"
-                                Text="{Binding SumWeight}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="150" Header="重量">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox
+                                    IsReadOnly="True"
+                                    Style="{StaticResource GeneralTextBoxStyle}"
+                                    Text="{Binding SumWeight}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-            </DataGrid.Columns>
-        </DataGrid>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <controls:Paginator Grid.Row="1" />
+        </Grid>
+
 
         <!--  操作按鈕  -->
         <StackPanel

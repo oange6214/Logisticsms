@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace Logisticsm.ViewModels.AirTransports
 {
-    public class EditAirTransportViewModel : ObservableObject
+    public class EditAirTransportViewModel : ObservableRecipient
     {
         #region Fields
 
@@ -203,6 +203,9 @@ namespace Logisticsm.ViewModels.AirTransports
             }
         }
 
+        /// <summary>
+        /// 改變 Customer
+        /// </summary>
         public RelayCommand CustomerSelectionChangedCommand
         {
             get

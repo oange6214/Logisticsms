@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace Logisticsm.ViewModels.AirTransports
 {
-    public class AirTransportViewModel : ObservableObject
+    public class AirTransportViewModel : ObservableRecipient
     {
         #region Fields
 

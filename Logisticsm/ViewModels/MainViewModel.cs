@@ -11,7 +11,7 @@ using System.Windows.Controls;
 
 namespace Logisticsm.ViewModels
 {
-    public class MainViewModel : ObservableObject
+    public class MainViewModel : ObservableRecipient
     {
 
         #region Properties

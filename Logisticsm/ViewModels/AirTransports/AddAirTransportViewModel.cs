@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace Logisticsm.ViewModels.AirTransports
 {
-    public class AddAirTransportViewModel : ObservableObject
+    public class AddAirTransportViewModel : ObservableRecipient
     {
         #region Fields
 

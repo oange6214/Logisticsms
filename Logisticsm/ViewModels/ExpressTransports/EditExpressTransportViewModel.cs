@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace Logisticsm.ViewModels.ExpressTransports
 {
-    public class EditExpressTransportViewModel : ObservableObject
+    public class EditExpressTransportViewModel : ObservableRecipient
     {
         #region Fields
 

@@ -131,13 +131,11 @@
                         <ComboBox
                             Grid.Row="4"
                             Grid.Column="1"
-                            Height="25"
                             MinWidth="200"
                             Margin="3"
                             DisplayMemberPath="Name"
                             ItemsSource="{Binding Customers}"
                             SelectedItem="{Binding Customer}">
-
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding CustomerSelectionChangedCommand}" />

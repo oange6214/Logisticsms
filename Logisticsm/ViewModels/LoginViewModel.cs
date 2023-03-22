@@ -8,8 +8,8 @@ using System.Windows;
 
 namespace Logisticsm.ViewModels
 {
-	public class LoginViewModel : ObservableObject
-	{
+	public class LoginViewModel : ObservableRecipient
+    {
 		#region 
 
 		private readonly MemberProvider _MemberProvider = new();

@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace Logisticsm.ViewModels.SeaTransports
 {
-    public class EditSeaTransportViewModel : ObservableObject
+    public class EditSeaTransportViewModel : ObservableRecipient
     {
         #region Fields
 
@@ -194,6 +194,20 @@ namespace Logisticsm.ViewModels.SeaTransports
                             SeaTransportDetails.Remove(entity);
                         }
                     }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 改變 Customer
+        /// </summary>
+        public RelayCommand CustomerSelectionChangedCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    SeaTransport.CustomerId = Customer.Id;
                 });
             }
         }

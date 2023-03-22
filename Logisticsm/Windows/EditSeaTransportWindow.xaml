@@ -106,6 +106,10 @@
                             Grid.Row="3"
                             Grid.Column="0"
                             Text="目的地" />
+                        <TextBlock
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            Text="客戶選擇" />
 
                         <TextBox
                             Grid.Row="0"
@@ -123,6 +127,20 @@
                             Grid.Row="3"
                             Grid.Column="1"
                             Text="{Binding SeaTransport.TargetPlace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <ComboBox
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            MinWidth="200"
+                            Margin="3"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding Customers}"
+                            SelectedItem="{Binding Customer}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding CustomerSelectionChangedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
 
                     </Grid>
 
@@ -156,6 +174,10 @@
                             Grid.Row="3"
                             Grid.Column="0"
                             Text="備註" />
+                        <TextBlock
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            Text="出貨時間" />
 
                         <TextBox
                             Grid.Row="0"
@@ -173,6 +195,13 @@
                         <Border Grid.Row="3" Grid.Column="1">
                             <TextBox Text="{Binding SeaTransport.Tag}" />
                         </Border>
+
+                        <DatePicker
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            MinWidth="200"
+                            Margin="3"
+                            SelectedDate="{Binding SeaTransport.SendDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     </Grid>
                 </Grid>

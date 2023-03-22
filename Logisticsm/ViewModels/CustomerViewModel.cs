@@ -8,8 +8,8 @@ using System.Windows;
 
 namespace Logisticsm.ViewModels
 {
-	public class CustomerViewModel : ObservableObject
-	{
+	public class CustomerViewModel : ObservableRecipient
+    {
 		#region Fields
 
 		private readonly CustomerProvider _CustomerProvider = new();

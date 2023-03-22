@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace Logisticsm.ViewModels.SeaTransports
 {
-    public class AddSeaTransportViewModel : ObservableObject
+    public class AddSeaTransportViewModel : ObservableRecipient
     {
         #region Fields
 
